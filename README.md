@@ -17,10 +17,10 @@ results = c.directories.lookup(term='alice', profile='default')
 ## How to implement a new command
 
 Someone trying to implement a new command to the client would have to implement
-a new class sub-classing the BaseHTTPCommand. The new class must be in the
-setup.py in the entry points under dird_client.commands. The name of the entry
-point is used as the handle on the client. For example, if you new entry point
-entry looks like this:
+a new class, sub-classing the BaseHTTPCommand (available in
+xivo-lib-rest-client). The new class must be in the setup.py in the entry points
+under dird_client.commands. The name of the entry point is used as the handle on
+the client. For example, if your new entry point entry looks like this:
 
 ```python
 entry_points={
@@ -30,7 +30,7 @@ entry_points={
 }
 ```
 
-your command will be accessible from the client like this:
+then your command will be accessible from the client like this:
 
 ```python
 c = Client(...)
