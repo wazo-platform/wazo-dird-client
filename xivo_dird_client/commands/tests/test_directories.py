@@ -52,17 +52,3 @@ class TestLookup(unittest.TestCase):
         cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
 
         self.assertRaises(UnexpectedResultError, cmd.lookup, profile='my_profile', term='lol')
-
-    def test_without_a_profile_argument(self):
-        self.session.get.return_value = Mock(content='''{"return": "value"}''',
-                                             status_code=200)
-
-        cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
-
-        result = cmd.lookup.default(term='Alice')
-
-        self.session.get.assert_called_once_with(
-            'http://example.com:9489/0.1/directories/lookup/default',
-            params={'term': 'Alice'})
-        assert_that(result, equal_to({'return': 'value'}))
-

@@ -18,7 +18,6 @@
 import json
 
 from .exceptions import UnexpectedResultError
-from functools import partial
 from xivo_lib_rest_client import BaseHTTPCommand
 
 
@@ -26,22 +25,7 @@ class DirectoriesCommand(BaseHTTPCommand):
 
     resource = 'directories'
 
-    class Lookup(object):
-
-        def __init__(self, this):
-            self.this = this
-
-        def __call__(self, **kwargs):
-            return self.this._lookup(**kwargs)
-
-        def __getattr__(self, profile):
-            return partial(self.this._lookup, profile=profile)
-
-    def __init__(self, *args, **kwargs):
-        super(DirectoriesCommand, self).__init__(*args, **kwargs)
-        self.lookup = self.Lookup(self)
-
-    def _lookup(self, **kwargs):
+    def lookup(self, **kwargs):
         url = '{base_url}/lookup/{profile}'.format(base_url=self.resource_url,
                                                    profile=kwargs.pop('profile'))
         r = self.session.get(url, params=kwargs)

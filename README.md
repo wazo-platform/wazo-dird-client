@@ -10,11 +10,7 @@ from xivo_dird_client import Client
 
 c = Client('localhost', port=9489, version='0.1')
 
-results = c.directories.lookup(profile='default', term='alice')
-
-# or
-
-results = c.directories.lookup.default(term='alice')
+results = c.directories.lookup(term='alice', profile='default')
 ```
 
 
