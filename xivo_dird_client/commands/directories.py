@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-import json
-
 from .exceptions import UnexpectedResultError
 from xivo_lib_rest_client import BaseHTTPCommand
 
@@ -33,4 +31,15 @@ class DirectoriesCommand(BaseHTTPCommand):
         if r.status_code != 200:
             raise UnexpectedResultError()
 
-        return json.loads(r.content)
+        return r.json()
+
+    def headers(self, **kwargs):
+        url = '{base_url}/lookup/{profile}/headers'.format(base_url=self.resource_url,
+                                                           profile=kwargs.pop('profile'))
+
+        r = self.session.get(url, params=kwargs)
+
+        if r.status_code != 200:
+            r.raise_for_status()
+
+        return r.json()
