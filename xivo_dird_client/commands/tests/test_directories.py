@@ -18,7 +18,6 @@
 import unittest
 
 from ..directories import DirectoriesCommand
-from ..exceptions import UnexpectedResultError
 from hamcrest import assert_that
 from hamcrest import equal_to
 from mock import Mock
@@ -51,4 +50,4 @@ class TestLookup(unittest.TestCase):
 
         cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
 
-        self.assertRaises(UnexpectedResultError, cmd.lookup, profile='my_profile', term='lol')
+        self.assertRaises(Exception, cmd.lookup, profile='my_profile', term='lol')

@@ -17,7 +17,6 @@
 
 import json
 
-from .exceptions import UnexpectedResultError
 from xivo_lib_rest_client import BaseHTTPCommand
 
 
@@ -31,6 +30,6 @@ class DirectoriesCommand(BaseHTTPCommand):
         r = self.session.get(url, params=kwargs)
 
         if r.status_code != 200:
-            raise UnexpectedResultError()
+            r.raise_for_status()
 
         return json.loads(r.content)
