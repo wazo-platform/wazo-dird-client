@@ -1,5 +1,6 @@
 xivo-dird-client
 ================
+[![Build Status](https://travis-ci.org/xivo-pbx/xivo-dird-client.svg?branch=master)](https://travis-ci.org/xivo-pbx/xivo-dird-client)
 
 A python library to connect to xivo-dird.
 
