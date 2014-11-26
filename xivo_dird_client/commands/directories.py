@@ -30,6 +30,6 @@ class DirectoriesCommand(BaseHTTPCommand):
         r = self.session.get(url, params=kwargs)
 
         if r.status_code != 200:
-            r.raise_for_status()
+            self.raise_from_response(r)
 
         return json.loads(r.content)
