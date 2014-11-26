@@ -34,7 +34,7 @@ class TestLookup(unittest.TestCase):
         self.session = Mock()
 
     def test_lookup(self):
-        self.session.get.return_value = Mock(content='''{"return": "value"}''',
+        self.session.get.return_value = Mock(json=Mock(return_value={"return": "value"}),
                                              status_code=200)
 
         cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
@@ -52,3 +52,23 @@ class TestLookup(unittest.TestCase):
         cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
 
         self.assertRaises(UnexpectedResultError, cmd.lookup, profile='my_profile', term='lol')
+
+    def test_headers(self):
+        self.session.get.return_value = Mock(json=Mock(return_value={"return": "value"}),
+                                             status_code=200)
+
+        cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
+
+        result = cmd.headers(profile='default')
+
+        self.session.get.assert_called_once_with(
+            'http://example.com:9489/0.1/directories/lookup/default/headers',
+            params={})
+        assert_that(result, equal_to({'return': 'value'}))
+
+    def test_headers_when_not_200(self):
+        self.session.get_return_value = Mock(status_code=404)
+
+        cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
+
+        self.assertRaises(Exception, cmd.lookup, profile='my_profile')
