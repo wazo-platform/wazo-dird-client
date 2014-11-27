@@ -22,9 +22,9 @@ class DirectoriesCommand(BaseHTTPCommand):
 
     resource = 'directories'
 
-    def lookup(self, **kwargs):
-        url = '{base_url}/lookup/{profile}'.format(base_url=self.resource_url,
-                                                   profile=kwargs.pop('profile'))
+    def lookup(self, profile, **kwargs):
+        url = '{base_url}/lookup/{profile}'.format(base_url=self.base_url,
+                                                   profile=profile)
         r = self.session.get(url, params=kwargs)
 
         if r.status_code != 200:
@@ -32,9 +32,9 @@ class DirectoriesCommand(BaseHTTPCommand):
 
         return r.json()
 
-    def headers(self, **kwargs):
-        url = '{base_url}/lookup/{profile}/headers'.format(base_url=self.resource_url,
-                                                           profile=kwargs.pop('profile'))
+    def headers(self, profile, **kwargs):
+        url = '{base_url}/lookup/{profile}/headers'.format(base_url=self.base_url,
+                                                           profile=profile)
 
         r = self.session.get(url, params=kwargs)
 
