@@ -22,6 +22,7 @@ from hamcrest import assert_that
 from hamcrest import equal_to
 from mock import Mock
 from requests.exceptions import HTTPError
+from xivo_lib_rest_client.tests.response import new_response
 
 
 class TestLookup(unittest.TestCase):
@@ -34,7 +35,7 @@ class TestLookup(unittest.TestCase):
         self.session = Mock()
 
     def test_lookup(self):
-        self.session.get.return_value = self._new_response(200, json={'return': 'value'})
+        self.session.get.return_value = new_response(200, json={'return': 'value'})
 
         cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
 
@@ -46,14 +47,14 @@ class TestLookup(unittest.TestCase):
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_when_not_200(self):
-        self.session.get.return_value = self._new_response(404)
+        self.session.get.return_value = new_response(404)
 
         cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
 
         self.assertRaises(HTTPError, cmd.lookup, profile='my_profile', term='lol')
 
     def test_headers(self):
-        self.session.get.return_value = self._new_response(200, json={'return': 'value'})
+        self.session.get.return_value = new_response(200, json={'return': 'value'})
 
         cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
 
@@ -65,17 +66,8 @@ class TestLookup(unittest.TestCase):
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_headers_when_not_200(self):
-        self.session.get.return_value = self._new_response(404)
+        self.session.get.return_value = new_response(404)
 
         cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
 
         self.assertRaises(HTTPError, cmd.headers, profile='my_profile')
-
-    @staticmethod
-    def _new_response(status_code, json=None):
-        response = Mock()
-        response.status_code = status_code
-        response.raise_for_status.side_effect = HTTPError()
-        if json is not None:
-            response.json.return_value = json
-        return response
