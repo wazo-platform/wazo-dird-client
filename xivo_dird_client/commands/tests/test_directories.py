@@ -34,8 +34,7 @@ class TestLookup(unittest.TestCase):
         self.session = Mock()
 
     def test_lookup(self):
-        self.session.get.return_value = Mock(json=Mock(return_value={"return": "value"}),
-                                             status_code=200)
+        self.session.get.return_value = self._new_response(200, json={'return': 'value'})
 
         cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
 
@@ -54,8 +53,7 @@ class TestLookup(unittest.TestCase):
         self.assertRaises(HTTPError, cmd.lookup, profile='my_profile', term='lol')
 
     def test_headers(self):
-        self.session.get.return_value = Mock(json=Mock(return_value={"return": "value"}),
-                                             status_code=200)
+        self.session.get.return_value = self._new_response(200, json={'return': 'value'})
 
         cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
 
