@@ -15,59 +15,42 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-import unittest
-
 from ..directories import DirectoriesCommand
 from hamcrest import assert_that
 from hamcrest import equal_to
-from mock import Mock
-from requests.exceptions import HTTPError
-from xivo_lib_rest_client.tests.response import new_response
+from xivo_lib_rest_client.tests.response import HTTPCommandTestCase
 
 
-class TestLookup(unittest.TestCase):
+class TestDirectoriesCommand(HTTPCommandTestCase):
 
-    def setUp(self):
-        self.scheme = 'http'
-        self.host = 'example.com'
-        self.port = 9489
-        self.version = '0.1'
-        self.session = Mock()
+    Command = DirectoriesCommand
 
     def test_lookup(self):
-        self.session.get.return_value = new_response(200, json={'return': 'value'})
+        self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
-        cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
-
-        result = cmd.lookup(profile='default', term='Alice')
+        result = self.command.lookup(profile='default', term='Alice')
 
         self.session.get.assert_called_once_with(
-            'http://example.com:9489/0.1/directories/lookup/default',
+            self.base_url + '/lookup/default',
             params={'term': 'Alice'})
         assert_that(result, equal_to({'return': 'value'}))
 
-    def test_when_not_200(self):
-        self.session.get.return_value = new_response(404)
+    def test_lookup_when_not_200(self):
+        self.session.get.return_value = self.new_response(404)
 
-        cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
-
-        self.assertRaises(HTTPError, cmd.lookup, profile='my_profile', term='lol')
+        self.assertRaisesHTTPError(self.command.headers, profile='my_profile')
 
     def test_headers(self):
-        self.session.get.return_value = new_response(200, json={'return': 'value'})
+        self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
-        cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
-
-        result = cmd.headers(profile='default')
+        result = self.command.headers(profile='default')
 
         self.session.get.assert_called_once_with(
-            'http://example.com:9489/0.1/directories/lookup/default/headers',
+            self.base_url + '/lookup/default/headers',
             params={})
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_headers_when_not_200(self):
-        self.session.get.return_value = new_response(404)
+        self.session.get.return_value = self.new_response(404)
 
-        cmd = DirectoriesCommand(self.scheme, self.host, self.port, self.version, self.session)
-
-        self.assertRaises(HTTPError, cmd.headers, profile='my_profile')
+        self.assertRaisesHTTPError(self.command.headers, profile='my_profile')
