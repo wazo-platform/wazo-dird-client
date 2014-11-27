@@ -18,10 +18,10 @@
 from ..directories import DirectoriesCommand
 from hamcrest import assert_that
 from hamcrest import equal_to
-from xivo_lib_rest_client.tests.response import HTTPCommandTestCase
+from xivo_lib_rest_client.tests.command import HTTPCommandTestCase
 
 
-class TestDirectoriesCommand(HTTPCommandTestCase):
+class TestDirectories(HTTPCommandTestCase):
 
     Command = DirectoriesCommand
 
@@ -31,7 +31,7 @@ class TestDirectoriesCommand(HTTPCommandTestCase):
         result = self.command.lookup(profile='default', term='Alice')
 
         self.session.get.assert_called_once_with(
-            self.base_url + '/lookup/default',
+            '{base_url}/lookup/default'.format(base_url=self.base_url),
             params={'term': 'Alice'})
         assert_that(result, equal_to({'return': 'value'}))
 
@@ -46,7 +46,7 @@ class TestDirectoriesCommand(HTTPCommandTestCase):
         result = self.command.headers(profile='default')
 
         self.session.get.assert_called_once_with(
-            self.base_url + '/lookup/default/headers',
+            '{base_url}/lookup/default/headers'.format(base_url=self.base_url),
             params={})
         assert_that(result, equal_to({'return': 'value'}))
 
