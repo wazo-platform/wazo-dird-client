@@ -9,7 +9,7 @@ Usage:
 ```python
 from xivo_dird_client import Client
 
-c = Client('localhost', port=9489, version='0.1')
+c = Client('localhost', port=9489, version='0.1', timeout=3)
 
 results = c.directories.lookup(term='alice', profile='default')
 ```
