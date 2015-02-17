@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2014 Avencall
+# Copyright (C) 2014-2015 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,4 +17,4 @@
 
 from xivo_lib_rest_client import make_client
 
-Client = make_client('dird_client.commands')
+Client = make_client('dird_client.commands', timeout=3)
