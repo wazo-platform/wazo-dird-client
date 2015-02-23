@@ -14,6 +14,8 @@ c = Client('localhost', port=9489, version='0.1', timeout=3)
 results = c.directories.lookup(term='alice', profile='default')
 ```
 
+The default timeout for a Client is 3 seconds.
+
 
 ## How to implement a new command
 
