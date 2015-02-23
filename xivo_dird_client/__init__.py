@@ -17,4 +17,8 @@
 
 from xivo_lib_rest_client import make_client
 
-Client = make_client('dird_client.commands', timeout=3)
+Client = make_client('dird_client.commands',
+                     port=9489,
+                     version='0.1',
+                     timeout=3,
+                     https=False)
