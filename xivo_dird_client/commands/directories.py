@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2014 Avencall
+# Copyright (C) 2014-2015 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,3 +42,34 @@ class DirectoriesCommand(BaseHTTPCommand):
             self.raise_from_response(r)
 
         return r.json()
+
+    def favorites(self, profile, **kwargs):
+        url = '{base_url}/favorites/{profile}'.format(base_url=self.base_url,
+                                                      profile=profile)
+
+        r = self.session.get(url, params=kwargs)
+
+        if r.status_code != 200:
+            self.raise_from_response(r)
+
+        return r.json()
+
+    def new_favorite(self, directory, contact, **kwargs):
+        url = '{base_url}/favorites/{directory}/{contact}'.format(base_url=self.base_url,
+                                                                  directory=directory,
+                                                                  contact=contact)
+
+        r = self.session.put(url, params=kwargs)
+
+        if r.status_code != 204:
+            self.raise_from_response(r)
+
+    def remove_favorite(self, directory, contact, **kwargs):
+        url = '{base_url}/favorites/{directory}/{contact}'.format(base_url=self.base_url,
+                                                                  directory=directory,
+                                                                  contact=contact)
+
+        r = self.session.delete(url, params=kwargs)
+
+        if r.status_code != 204:
+            self.raise_from_response(r)
