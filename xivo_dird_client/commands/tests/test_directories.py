@@ -15,11 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-from ..directories import DirectoriesCommand
 from hamcrest import assert_that
 from hamcrest import equal_to
 from hamcrest import none
+from mock import sentinel as s
+
 from xivo_lib_rest_client.tests.command import HTTPCommandTestCase
+
+from ..directories import DirectoriesCommand
 
 
 class TestDirectories(HTTPCommandTestCase):
@@ -29,11 +32,12 @@ class TestDirectories(HTTPCommandTestCase):
     def test_lookup(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
-        result = self.command.lookup(profile='default', term='Alice')
+        result = self.command.lookup(profile='default', term='Alice', token=s.token)
 
         self.session.get.assert_called_once_with(
             '{base_url}/lookup/default'.format(base_url=self.base_url),
-            params={'term': 'Alice'})
+            params={'term': 'Alice'},
+            headers={'X-Auth-Token': s.token})
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_lookup_when_not_200(self):
@@ -44,11 +48,12 @@ class TestDirectories(HTTPCommandTestCase):
     def test_headers(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
-        result = self.command.headers(profile='default')
+        result = self.command.headers(profile='default', token=s.token)
 
         self.session.get.assert_called_once_with(
             '{base_url}/lookup/default/headers'.format(base_url=self.base_url),
-            params={})
+            params={},
+            headers={'X-Auth-Token': s.token})
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_headers_when_not_200(self):
@@ -59,11 +64,12 @@ class TestDirectories(HTTPCommandTestCase):
     def test_favorites(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
-        result = self.command.favorites(profile='default')
+        result = self.command.favorites(profile='default', token=s.token)
 
         self.session.get.assert_called_once_with(
             '{base_url}/favorites/default'.format(base_url=self.base_url),
-            params={})
+            params={},
+            headers={'X-Auth-Token': s.token})
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_favorites_when_not_200(self):
@@ -74,11 +80,12 @@ class TestDirectories(HTTPCommandTestCase):
     def test_new_favorite(self):
         self.session.put.return_value = self.new_response(204)
 
-        result = self.command.new_favorite('my_directory', 'my_contact')
+        result = self.command.new_favorite('my_directory', 'my_contact', token=s.token)
 
         self.session.put.assert_called_once_with(
             '{base_url}/favorites/my_directory/my_contact'.format(base_url=self.base_url),
-            params={})
+            params={},
+            headers={'X-Auth-Token': s.token})
         assert_that(result, none())
 
     def test_new_favorite_when_not_204(self):
@@ -89,11 +96,12 @@ class TestDirectories(HTTPCommandTestCase):
     def test_remove_favorite(self):
         self.session.delete.return_value = self.new_response(204)
 
-        result = self.command.remove_favorite('my_directory', 'my_contact')
+        result = self.command.remove_favorite('my_directory', 'my_contact', token=s.token)
 
         self.session.delete.assert_called_once_with(
             '{base_url}/favorites/my_directory/my_contact'.format(base_url=self.base_url),
-            params={})
+            params={},
+            headers={'X-Auth-Token': s.token})
         assert_that(result, none())
 
     def test_remove_favorite_when_not_204(self):

@@ -17,4 +17,4 @@
 
 from xivo_lib_rest_client import new_client_factory
 
-Client = new_client_factory('dird_client.commands', 9489,  '0.1')
+Client = new_client_factory('dird_client.commands', 9489,  '0.1', default_https=True)
