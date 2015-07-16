@@ -20,12 +20,12 @@ from hamcrest import equal_to
 from hamcrest import none
 from mock import sentinel as s
 
-from xivo_lib_rest_client.tests.command import HTTPCommandTestCase
+from xivo_lib_rest_client.tests.command import RESTCommandTestCase
 
 from ..directories import DirectoriesCommand
 
 
-class TestDirectories(HTTPCommandTestCase):
+class TestDirectories(RESTCommandTestCase):
 
     Command = DirectoriesCommand
 

@@ -15,10 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-from xivo_lib_rest_client import BaseHTTPCommand
+from xivo_lib_rest_client import RESTCommand
 
 
-class DirectoriesCommand(BaseHTTPCommand):
+class DirectoriesCommand(RESTCommand):
 
     resource = 'directories'
 
