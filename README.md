@@ -11,7 +11,12 @@ from xivo_dird_client import Client
 
 c = Client('localhost', port=9489, version='0.1', timeout=3)
 
-results = c.directories.lookup(term='alice', profile='default')
+results = c.directories.headers(term='alice', profile='default', token='my-valid-token')
+results = c.directories.lookup(term='alice', profile='default', token='my-valid-token')
+
+results = c.directories.favorites(profile='default', token='my-valid-token')
+c.directories.new_favorite('my-directory', 'contact-in-my-directory', token='my-valid-token')
+c.directories.remove_favorite('my-directory', 'contact-in-my-directory', token='my-valid-token')
 ```
 
 
