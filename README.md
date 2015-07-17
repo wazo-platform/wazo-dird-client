@@ -17,6 +17,14 @@ results = c.directories.lookup(term='alice', profile='default', token='my-valid-
 results = c.directories.favorites(profile='default', token='my-valid-token')
 c.directories.new_favorite('my-directory', 'contact-in-my-directory', token='my-valid-token')
 c.directories.remove_favorite('my-directory', 'contact-in-my-directory', token='my-valid-token')
+
+privates = c.privates.list(token='my-valid-token')
+my_contact = {
+    'firstname': 'Alice',
+    'lastname': 'Scylla'
+}
+my_new_contact = c.privates.create(my_contact, token='my-valid-token')
+privates = c.privates.delete(my_new_contact['id'], token='my-valid-token')
 ```
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2014 Avencall
+# Copyright (C) 2014-2015 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ setup(
     entry_points={
         'dird_client.commands': [
             'directories = xivo_dird_client.commands.directories:DirectoriesCommand',
+            'privates = xivo_dird_client.commands.privates:PrivatesCommand',
         ],
     }
 )
