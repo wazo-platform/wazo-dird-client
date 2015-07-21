@@ -88,3 +88,17 @@ class DirectoriesCommand(RESTCommand):
 
         if r.status_code != 204:
             self.raise_from_response(r)
+
+    def privates(self, profile, token=None, **kwargs):
+        url = '{base_url}/privates/{profile}'.format(base_url=self.base_url,
+                                                     profile=profile)
+
+        headers = {}
+        if token:
+            headers['X-Auth-Token'] = token
+        r = self.session.get(url, params=kwargs, headers=headers)
+
+        if r.status_code != 200:
+            self.raise_from_response(r)
+
+        return r.json()

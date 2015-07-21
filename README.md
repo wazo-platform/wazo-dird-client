@@ -18,6 +18,8 @@ results = c.directories.favorites(profile='default', token='my-valid-token')
 c.directories.new_favorite('my-directory', 'contact-in-my-directory', token='my-valid-token')
 c.directories.remove_favorite('my-directory', 'contact-in-my-directory', token='my-valid-token')
 
+results = c.directories.privates(profile='default', token='my-valid-token')
+
 privates = c.privates.list(token='my-valid-token')
 my_contact = {
     'firstname': 'Alice',
