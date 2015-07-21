@@ -17,10 +17,10 @@
 
 import json
 
-from xivo_lib_rest_client import BaseHTTPCommand
+from xivo_lib_rest_client import RESTCommand
 
 
-class PrivatesCommand(BaseHTTPCommand):
+class PrivatesCommand(RESTCommand):
 
     resource = 'privates'
 
