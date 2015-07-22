@@ -24,12 +24,12 @@ from mock import sentinel as s
 
 from xivo_lib_rest_client.tests.command import RESTCommandTestCase
 
-from ..privates import PrivatesCommand
+from ..personal import PersonalCommand
 
 
-class TestDirectories(RESTCommandTestCase):
+class TestPersonal(RESTCommandTestCase):
 
-    Command = PrivatesCommand
+    Command = PersonalCommand
 
     def test_list(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})

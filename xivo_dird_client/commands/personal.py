@@ -20,9 +20,9 @@ import json
 from xivo_lib_rest_client import RESTCommand
 
 
-class PrivatesCommand(RESTCommand):
+class PersonalCommand(RESTCommand):
 
-    resource = 'privates'
+    resource = 'personal'
 
     def list(self, token=None, **kwargs):
         url = '{base_url}'.format(base_url=self.base_url)

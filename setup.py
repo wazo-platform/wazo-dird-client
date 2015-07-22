@@ -35,7 +35,7 @@ setup(
     entry_points={
         'dird_client.commands': [
             'directories = xivo_dird_client.commands.directories:DirectoriesCommand',
-            'privates = xivo_dird_client.commands.privates:PrivatesCommand',
+            'personal = xivo_dird_client.commands.personal:PersonalCommand',
         ],
     }
 )
