@@ -109,18 +109,18 @@ class TestDirectories(RESTCommandTestCase):
 
         self.assertRaisesHTTPError(self.command.remove_favorite, 'my_directory', 'my_contact')
 
-    def test_privates(self):
+    def test_personal(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
-        result = self.command.privates(profile='default', token=s.token)
+        result = self.command.personal(profile='default', token=s.token)
 
         self.session.get.assert_called_once_with(
-            '{base_url}/privates/default'.format(base_url=self.base_url),
+            '{base_url}/personal/default'.format(base_url=self.base_url),
             params={},
             headers={'X-Auth-Token': s.token})
         assert_that(result, equal_to({'return': 'value'}))
 
-    def test_privates_when_not_200(self):
+    def test_personal_when_not_200(self):
         self.session.get.return_value = self.new_response(404)
 
-        self.assertRaisesHTTPError(self.command.privates, profile='my_profile')
+        self.assertRaisesHTTPError(self.command.personal, profile='my_profile')

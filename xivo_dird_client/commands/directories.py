@@ -89,8 +89,8 @@ class DirectoriesCommand(RESTCommand):
         if r.status_code != 204:
             self.raise_from_response(r)
 
-    def privates(self, profile, token=None, **kwargs):
-        url = '{base_url}/privates/{profile}'.format(base_url=self.base_url,
+    def personal(self, profile, token=None, **kwargs):
+        url = '{base_url}/personal/{profile}'.format(base_url=self.base_url,
                                                      profile=profile)
 
         headers = {}
