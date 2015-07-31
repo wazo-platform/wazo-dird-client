@@ -26,7 +26,15 @@ my_contact = {
     'lastname': 'Scylla'
 }
 my_new_contact = c.personal.create(my_contact, token='my-valid-token')
-personal = c.personal.delete(my_new_contact['id'], token='my-valid-token')
+contact_id = my_new_contact['id']
+personal = c.personal.get(contact_id, token='my-valid-token')
+my_contact = {
+    'firstname': 'Alice',
+    'lastname': 'Scylla',
+    'company': 'acme,'
+}
+new_personal = c.personal.put(contact_id, my_contact, token='my-valid-token')
+c.personal.delete(my_new_contact['id'], token='my-valid-token')
 ```
 
 
