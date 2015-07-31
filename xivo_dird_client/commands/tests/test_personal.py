@@ -47,6 +47,24 @@ class TestPersonal(RESTCommandTestCase):
 
         self.assertRaisesHTTPError(self.command.list)
 
+    def test_get(self):
+        self.session.get.return_value = self.new_response(200, json={'return': 'value'})
+        contact_id = 'my_contact_id'
+
+        result = self.command.get(contact_id, token=s.token)
+
+        self.session.get.assert_called_once_with(
+            '{base_url}/{contact_id}'.format(base_url=self.base_url,
+                                             contact_id=contact_id),
+            params={},
+            headers={'X-Auth-Token': s.token})
+        assert_that(result, equal_to({'return': 'value'}))
+
+    def test_get_when_not_200(self):
+        self.session.get.return_value = self.new_response(401)
+
+        self.assertRaisesHTTPError(self.command.get, 'my_contact_id')
+
     def test_create(self):
         self.session.post.return_value = self.new_response(201, json={'return': 'value'})
         contact = {'firstname': 'Alice'}
