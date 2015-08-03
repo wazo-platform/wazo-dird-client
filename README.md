@@ -33,7 +33,7 @@ my_contact = {
     'lastname': 'Scylla',
     'company': 'acme,'
 }
-new_personal = c.personal.put(contact_id, my_contact, token='my-valid-token')
+new_personal = c.personal.edit(contact_id, my_contact, token='my-valid-token')
 c.personal.delete(my_new_contact['id'], token='my-valid-token')
 ```
 
