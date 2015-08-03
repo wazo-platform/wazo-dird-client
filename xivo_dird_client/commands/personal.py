@@ -37,6 +37,20 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
+    def get(self, contact_id, token=None, **kwargs):
+        url = '{base_url}/{contact_id}'.format(base_url=self.base_url,
+                                               contact_id=contact_id)
+
+        headers = {}
+        if token:
+            headers['X-Auth-Token'] = token
+        r = self.session.get(url, params=kwargs, headers=headers)
+
+        if r.status_code != 200:
+            self.raise_from_response(r)
+
+        return r.json()
+
     def create(self, contact_infos, token=None, **kwargs):
         url = '{base_url}'.format(base_url=self.base_url)
 
@@ -46,6 +60,20 @@ class PersonalCommand(RESTCommand):
         r = self.session.post(url, data=json.dumps(contact_infos), params=kwargs, headers=headers)
 
         if r.status_code != 201:
+            self.raise_from_response(r)
+
+        return r.json()
+
+    def edit(self, contact_id, contact_infos, token=None, **kwargs):
+        url = '{base_url}/{contact_id}'.format(base_url=self.base_url,
+                                               contact_id=contact_id)
+
+        headers = {'Content-Type': 'application/json'}
+        if token:
+            headers['X-Auth-Token'] = token
+        r = self.session.put(url, data=json.dumps(contact_infos), params=kwargs, headers=headers)
+
+        if r.status_code != 200:
             self.raise_from_response(r)
 
         return r.json()
