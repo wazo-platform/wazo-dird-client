@@ -65,6 +65,25 @@ class TestPersonal(RESTCommandTestCase):
 
         self.assertRaisesHTTPError(self.command.get, 'my_contact_id')
 
+    def test_import_csv(self):
+        self.session.post.return_value = self.new_response(201, json={'return': 'value'})
+        csv = 'firstname,lastname\ndaniel,martini'
+
+        result = self.command.import_csv(csv, encoding='cp1252', token=s.token)
+
+        self.session.post.assert_called_once_with(
+            '{base_url}/import'.format(base_url=self.base_url),
+            data=csv,
+            params={},
+            headers={'X-Auth-Token': s.token,
+                     'Content-Type': 'text/csv; charset=cp1252'})
+        assert_that(result, equal_to({'return': 'value'}))
+
+    def test_import_csv_when_not_201(self):
+        self.session.post.return_value = self.new_response(401)
+
+        self.assertRaisesHTTPError(self.command.import_csv, 'firstname,lastname\ndaniel,martini')
+
     def test_create(self):
         self.session.post.return_value = self.new_response(201, json={'return': 'value'})
         contact = {'firstname': 'Alice'}

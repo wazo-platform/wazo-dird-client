@@ -25,6 +25,7 @@ my_contact = {
     'firstname': 'Alice',
     'lastname': 'Scylla'
 }
+import_result = c.personal.import_csv(csv_text, encoding='utf-8', token='my-valid-token')
 my_new_contact = c.personal.create(my_contact, token='my-valid-token')
 contact_id = my_new_contact['id']
 personal = c.personal.get(contact_id, token='my-valid-token')
