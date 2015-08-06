@@ -37,6 +37,23 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
+    def export_csv(self, token=None, **kwargs):
+        url = '{base_url}'.format(base_url=self.base_url)
+
+        headers = {}
+        if token:
+            headers['X-Auth-Token'] = token
+        kwargs['format'] = 'text/csv'
+        r = self.session.get(url, params=kwargs, headers=headers)
+
+        if r.status_code == 200:
+            return r.text
+
+        if r.status_code == 204:
+            return None
+
+        self.raise_from_response(r)
+
     def get(self, contact_id, token=None, **kwargs):
         url = '{base_url}/{contact_id}'.format(base_url=self.base_url,
                                                contact_id=contact_id)

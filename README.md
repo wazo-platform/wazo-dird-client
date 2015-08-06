@@ -21,6 +21,7 @@ c.directories.remove_favorite('my-directory', 'contact-in-my-directory', token='
 results = c.directories.personal(profile='default', token='my-valid-token')
 
 personal = c.personal.list(token='my-valid-token')
+csv_text = c.personal.export_csv(token='my-valid-token')  # None if no personal contacts
 csv_text = '''firstname,lastname
 Alice,Scylla
 '''
