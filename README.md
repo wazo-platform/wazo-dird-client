@@ -21,11 +21,14 @@ c.directories.remove_favorite('my-directory', 'contact-in-my-directory', token='
 results = c.directories.personal(profile='default', token='my-valid-token')
 
 personal = c.personal.list(token='my-valid-token')
+csv_text = '''firstname,lastname
+Alice,Scylla
+'''
+import_result = c.personal.import_csv(csv_text, encoding='utf-8', token='my-valid-token')
 my_contact = {
     'firstname': 'Alice',
     'lastname': 'Scylla'
 }
-import_result = c.personal.import_csv(csv_text, encoding='utf-8', token='my-valid-token')
 my_new_contact = c.personal.create(my_contact, token='my-valid-token')
 contact_id = my_new_contact['id']
 personal = c.personal.get(contact_id, token='my-valid-token')
