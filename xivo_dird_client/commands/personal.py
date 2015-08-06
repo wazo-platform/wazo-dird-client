@@ -51,6 +51,20 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
+    def import_csv(self, csv_text, encoding=None, token=None, **kwargs):
+        url = '{base_url}/import'.format(base_url=self.base_url)
+
+        content_type = 'text/csv; charset={}'.format(encoding) if encoding else 'text/csv'
+        headers = {'Content-Type': content_type}
+        if token:
+            headers['X-Auth-Token'] = token
+        r = self.session.post(url, data=csv_text, params=kwargs, headers=headers)
+
+        if r.status_code != 201:
+            self.raise_from_response(r)
+
+        return r.json()
+
     def create(self, contact_infos, token=None, **kwargs):
         url = '{base_url}'.format(base_url=self.base_url)
 
