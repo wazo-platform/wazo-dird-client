@@ -19,6 +19,7 @@ import json
 
 from hamcrest import assert_that
 from hamcrest import equal_to
+from hamcrest import is_
 from hamcrest import none
 from mock import sentinel as s
 
@@ -46,6 +47,30 @@ class TestPersonal(RESTCommandTestCase):
         self.session.get.return_value = self.new_response(401)
 
         self.assertRaisesHTTPError(self.command.list)
+
+    def test_export_csv(self):
+        csv = 'firstname\r\nAlice'
+        self.session.get.return_value = self.new_response(200, body=csv)
+
+        result = self.command.export_csv(token=s.token)
+
+        self.session.get.assert_called_once_with(
+            '{base_url}'.format(base_url=self.base_url),
+            params={'format': 'text/csv'},
+            headers={'X-Auth-Token': s.token})
+        assert_that(result, equal_to(csv))
+
+    def test_export_csv_when_empty(self):
+        self.session.get.return_value = self.new_response(204)
+
+        result = self.command.export_csv(token=s.token)
+
+        assert_that(result, is_(none()))
+
+    def test_export_csv_when_not_200(self):
+        self.session.get.return_value = self.new_response(401)
+
+        self.assertRaisesHTTPError(self.command.export_csv)
 
     def test_get(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
