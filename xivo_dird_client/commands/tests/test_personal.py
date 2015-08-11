@@ -38,7 +38,7 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.list(token=s.token)
 
         self.session.get.assert_called_once_with(
-            '{base_url}'.format(base_url=self.base_url),
+            self.base_url,
             params={},
             headers={'X-Auth-Token': s.token})
         assert_that(result, equal_to({'return': 'value'}))
@@ -49,7 +49,7 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.purge(token=s.token)
 
         self.session.delete.assert_called_once_with(
-            '{base_url}'.format(base_url=self.base_url),
+            self.base_url,
             params={},
             headers={'X-Auth-Token': s.token})
         assert_that(result, none())
@@ -66,7 +66,7 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.export_csv(token=s.token)
 
         self.session.get.assert_called_once_with(
-            '{base_url}'.format(base_url=self.base_url),
+            self.base_url,
             params={'format': 'text/csv'},
             headers={'X-Auth-Token': s.token})
         assert_that(result, equal_to(csv))
@@ -127,7 +127,7 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.create(contact, token=s.token)
 
         self.session.post.assert_called_once_with(
-            '{base_url}'.format(base_url=self.base_url),
+            self.base_url,
             data=json.dumps(contact),
             params={},
             headers={'X-Auth-Token': s.token,

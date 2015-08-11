@@ -25,12 +25,10 @@ class PersonalCommand(RESTCommand):
     resource = 'personal'
 
     def list(self, token=None, **kwargs):
-        url = '{base_url}'.format(base_url=self.base_url)
-
         headers = {}
         if token:
             headers['X-Auth-Token'] = token
-        r = self.session.get(url, params=kwargs, headers=headers)
+        r = self.session.get(self.base_url, params=kwargs, headers=headers)
 
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -38,24 +36,20 @@ class PersonalCommand(RESTCommand):
         return r.json()
 
     def purge(self, token=None, **kwargs):
-        url = '{base_url}'.format(base_url=self.base_url)
-
         headers = {}
         if token:
             headers['X-Auth-Token'] = token
-        r = self.session.delete(url, params=kwargs, headers=headers)
+        r = self.session.delete(self.base_url, params=kwargs, headers=headers)
 
         if r.status_code != 204:
             self.raise_from_response(r)
 
     def export_csv(self, token=None, **kwargs):
-        url = '{base_url}'.format(base_url=self.base_url)
-
         headers = {}
         if token:
             headers['X-Auth-Token'] = token
         kwargs['format'] = 'text/csv'
-        r = self.session.get(url, params=kwargs, headers=headers)
+        r = self.session.get(self.base_url, params=kwargs, headers=headers)
 
         if r.status_code == 200:
             return r.text
@@ -94,12 +88,10 @@ class PersonalCommand(RESTCommand):
         return r.json()
 
     def create(self, contact_infos, token=None, **kwargs):
-        url = '{base_url}'.format(base_url=self.base_url)
-
         headers = {'Content-Type': 'application/json'}
         if token:
             headers['X-Auth-Token'] = token
-        r = self.session.post(url, data=json.dumps(contact_infos), params=kwargs, headers=headers)
+        r = self.session.post(self.base_url, data=json.dumps(contact_infos), params=kwargs, headers=headers)
 
         if r.status_code != 201:
             self.raise_from_response(r)
