@@ -37,6 +37,17 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
+    def purge(self, token=None, **kwargs):
+        url = '{base_url}'.format(base_url=self.base_url)
+
+        headers = {}
+        if token:
+            headers['X-Auth-Token'] = token
+        r = self.session.delete(url, params=kwargs, headers=headers)
+
+        if r.status_code != 204:
+            self.raise_from_response(r)
+
     def export_csv(self, token=None, **kwargs):
         url = '{base_url}'.format(base_url=self.base_url)
 

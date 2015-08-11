@@ -43,6 +43,17 @@ class TestPersonal(RESTCommandTestCase):
             headers={'X-Auth-Token': s.token})
         assert_that(result, equal_to({'return': 'value'}))
 
+    def test_purge(self):
+        self.session.delete.return_value = self.new_response(204)
+
+        result = self.command.purge(token=s.token)
+
+        self.session.delete.assert_called_once_with(
+            '{base_url}'.format(base_url=self.base_url),
+            params={},
+            headers={'X-Auth-Token': s.token})
+        assert_that(result, none())
+
     def test_list_when_not_200(self):
         self.session.get.return_value = self.new_response(401)
 

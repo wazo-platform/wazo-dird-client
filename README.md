@@ -26,6 +26,7 @@ csv_text = '''firstname,lastname
 Alice,Scylla
 '''
 import_result = c.personal.import_csv(csv_text, encoding='utf-8', token='my-valid-token')
+c.personal.purge(token='my-valid-token')
 my_contact = {
     'firstname': 'Alice',
     'lastname': 'Scylla'
