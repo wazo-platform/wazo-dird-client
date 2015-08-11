@@ -57,7 +57,7 @@ class TestPersonal(RESTCommandTestCase):
     def test_list_when_not_200(self):
         self.session.get.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.list)
+        self.assertRaisesHTTPError(self.command.list, s.token)
 
     def test_export_csv(self):
         csv = 'firstname\r\nAlice'
@@ -81,7 +81,7 @@ class TestPersonal(RESTCommandTestCase):
     def test_export_csv_when_not_200(self):
         self.session.get.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.export_csv)
+        self.assertRaisesHTTPError(self.command.export_csv, s.token)
 
     def test_get(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
@@ -99,7 +99,7 @@ class TestPersonal(RESTCommandTestCase):
     def test_get_when_not_200(self):
         self.session.get.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.get, 'my_contact_id')
+        self.assertRaisesHTTPError(self.command.get, 'my_contact_id', s.token)
 
     def test_import_csv(self):
         self.session.post.return_value = self.new_response(201, json={'return': 'value'})
@@ -137,7 +137,7 @@ class TestPersonal(RESTCommandTestCase):
     def test_create_when_not_201(self):
         self.session.post.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.create, {'firstname': 'Alice'})
+        self.assertRaisesHTTPError(self.command.create, {'firstname': 'Alice'}, s.token)
 
     def test_edit(self):
         self.session.put.return_value = self.new_response(200, json={'return': 'value'})
@@ -158,7 +158,7 @@ class TestPersonal(RESTCommandTestCase):
     def test_edit_when_not_200(self):
         self.session.put.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.edit, 'my_contact_id', {'firstname': 'Alice'})
+        self.assertRaisesHTTPError(self.command.edit, 'my_contact_id', {'firstname': 'Alice'}, s.token)
 
     def test_delete(self):
         self.session.delete.return_value = self.new_response(204)
@@ -176,4 +176,4 @@ class TestPersonal(RESTCommandTestCase):
     def test_delete_when_not_201(self):
         self.session.delete.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.delete, {'firstname': 'Alice'})
+        self.assertRaisesHTTPError(self.command.delete, {'firstname': 'Alice'}, s.token)

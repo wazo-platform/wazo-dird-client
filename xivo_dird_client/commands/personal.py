@@ -24,10 +24,8 @@ class PersonalCommand(RESTCommand):
 
     resource = 'personal'
 
-    def list(self, token=None, **kwargs):
-        headers = {}
-        if token:
-            headers['X-Auth-Token'] = token
+    def list(self, token, **kwargs):
+        headers = {'X-Auth-Token': token}
         r = self.session.get(self.base_url, params=kwargs, headers=headers)
 
         if r.status_code != 200:
@@ -35,19 +33,15 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
-    def purge(self, token=None, **kwargs):
-        headers = {}
-        if token:
-            headers['X-Auth-Token'] = token
+    def purge(self, token, **kwargs):
+        headers = {'X-Auth-Token': token}
         r = self.session.delete(self.base_url, params=kwargs, headers=headers)
 
         if r.status_code != 204:
             self.raise_from_response(r)
 
-    def export_csv(self, token=None, **kwargs):
-        headers = {}
-        if token:
-            headers['X-Auth-Token'] = token
+    def export_csv(self, token, **kwargs):
+        headers = {'X-Auth-Token': token}
         kwargs['format'] = 'text/csv'
         r = self.session.get(self.base_url, params=kwargs, headers=headers)
 
@@ -59,13 +53,11 @@ class PersonalCommand(RESTCommand):
 
         self.raise_from_response(r)
 
-    def get(self, contact_id, token=None, **kwargs):
+    def get(self, contact_id, token, **kwargs):
         url = '{base_url}/{contact_id}'.format(base_url=self.base_url,
                                                contact_id=contact_id)
 
-        headers = {}
-        if token:
-            headers['X-Auth-Token'] = token
+        headers = {'X-Auth-Token': token}
         r = self.session.get(url, params=kwargs, headers=headers)
 
         if r.status_code != 200:
@@ -77,9 +69,8 @@ class PersonalCommand(RESTCommand):
         url = '{base_url}/import'.format(base_url=self.base_url)
 
         content_type = 'text/csv; charset={}'.format(encoding) if encoding else 'text/csv'
-        headers = {'Content-Type': content_type}
-        if token:
-            headers['X-Auth-Token'] = token
+        headers = {'Content-Type': content_type,
+                   'X-Auth-Token': token}
         r = self.session.post(url, data=csv_text, params=kwargs, headers=headers)
 
         if r.status_code != 201:
@@ -87,10 +78,9 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
-    def create(self, contact_infos, token=None, **kwargs):
-        headers = {'Content-Type': 'application/json'}
-        if token:
-            headers['X-Auth-Token'] = token
+    def create(self, contact_infos, token, **kwargs):
+        headers = {'Content-Type': 'application/json',
+                   'X-Auth-Token': token}
         r = self.session.post(self.base_url, data=json.dumps(contact_infos), params=kwargs, headers=headers)
 
         if r.status_code != 201:
@@ -98,13 +88,12 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
-    def edit(self, contact_id, contact_infos, token=None, **kwargs):
+    def edit(self, contact_id, contact_infos, token, **kwargs):
         url = '{base_url}/{contact_id}'.format(base_url=self.base_url,
                                                contact_id=contact_id)
 
-        headers = {'Content-Type': 'application/json'}
-        if token:
-            headers['X-Auth-Token'] = token
+        headers = {'Content-Type': 'application/json',
+                   'X-Auth-Token': token}
         r = self.session.put(url, data=json.dumps(contact_infos), params=kwargs, headers=headers)
 
         if r.status_code != 200:
@@ -112,13 +101,11 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
-    def delete(self, contact_id, token=None, **kwargs):
+    def delete(self, contact_id, token, **kwargs):
         url = '{base_url}/{contact_id}'.format(base_url=self.base_url,
                                                contact_id=contact_id)
 
-        headers = {}
-        if token:
-            headers['X-Auth-Token'] = token
+        headers = {'X-Auth-Token': token}
         r = self.session.delete(url, params=kwargs, headers=headers)
 
         if r.status_code != 204:
