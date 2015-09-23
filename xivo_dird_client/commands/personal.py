@@ -24,7 +24,7 @@ class PersonalCommand(RESTCommand):
 
     resource = 'personal'
 
-    def list(self, token, **kwargs):
+    def list(self, token=None, **kwargs):
         headers = {'X-Auth-Token': token}
         r = self.session.get(self.base_url, params=kwargs, headers=headers)
 
@@ -33,14 +33,14 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
-    def purge(self, token, **kwargs):
+    def purge(self, token=None, **kwargs):
         headers = {'X-Auth-Token': token}
         r = self.session.delete(self.base_url, params=kwargs, headers=headers)
 
         if r.status_code != 204:
             self.raise_from_response(r)
 
-    def export_csv(self, token, **kwargs):
+    def export_csv(self, token=None, **kwargs):
         headers = {'X-Auth-Token': token}
         kwargs['format'] = 'text/csv'
         r = self.session.get(self.base_url, params=kwargs, headers=headers)
@@ -53,7 +53,7 @@ class PersonalCommand(RESTCommand):
 
         self.raise_from_response(r)
 
-    def get(self, contact_id, token, **kwargs):
+    def get(self, contact_id, token=None, **kwargs):
         url = '{base_url}/{contact_id}'.format(base_url=self.base_url,
                                                contact_id=contact_id)
 
@@ -78,7 +78,7 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
-    def create(self, contact_infos, token, **kwargs):
+    def create(self, contact_infos, token=None, **kwargs):
         headers = {'Content-Type': 'application/json',
                    'X-Auth-Token': token}
         r = self.session.post(self.base_url, data=json.dumps(contact_infos), params=kwargs, headers=headers)
@@ -88,7 +88,7 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
-    def edit(self, contact_id, contact_infos, token, **kwargs):
+    def edit(self, contact_id, contact_infos, token=None, **kwargs):
         url = '{base_url}/{contact_id}'.format(base_url=self.base_url,
                                                contact_id=contact_id)
 
@@ -101,7 +101,7 @@ class PersonalCommand(RESTCommand):
 
         return r.json()
 
-    def delete(self, contact_id, token, **kwargs):
+    def delete(self, contact_id, token=None, **kwargs):
         url = '{base_url}/{contact_id}'.format(base_url=self.base_url,
                                                contact_id=contact_id)
 
