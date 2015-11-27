@@ -61,22 +61,6 @@ class TestDirectories(RESTCommandTestCase):
 
         self.assertRaisesHTTPError(self.command.reverse, profile='my_profile', xivo_user_uuid='abcd-1234')
 
-    def test_reverse_me(self):
-        self.session.get.return_value = self.new_response(200, json={'return': 'value'})
-
-        result = self.command.reverse_me(profile='default', exten='1234', token=s.token)
-
-        self.session.get.assert_called_once_with(
-            '{base_url}/reverse/default/me'.format(base_url=self.base_url),
-            params={'exten': '1234'},
-            headers={'X-Auth-Token': s.token})
-        assert_that(result, equal_to({'return': 'value'}))
-
-    def test_reverse_me_when_not_200(self):
-        self.session.get.return_value = self.new_response(404)
-
-        self.assertRaisesHTTPError(self.command.reverse_me, profile='my_profile')
-
     def test_headers(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
