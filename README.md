@@ -1,4 +1,5 @@
-# xivo-dird-client
+xivo-dird-client
+================
 
 [![Build Status](https://travis-ci.org/xivo-pbx/xivo-dird-client.svg?branch=master)](https://travis-ci.org/xivo-pbx/xivo-dird-client)
 
@@ -45,7 +46,8 @@ c.personal.delete(my_new_contact['id'], token='my-valid-token')
 ```
 
 
-## How to implement a new command
+How to implement a new command
+------------------------------
 
 Someone trying to implement a new command to the client would have to implement
 a new class, sub-classing the RESTCommand (available in
@@ -67,4 +69,13 @@ then your command will be accessible from the client like this:
 c = Client(...)
 
 c.foo.bar()  # bar is a method of the FooCommand class
+```
+
+Running unit tests
+------------------
+
+```
+apt-get install libpq-dev python-dev libffi-dev libyaml-dev
+pip install tox
+tox --recreate -e py27
 ```
