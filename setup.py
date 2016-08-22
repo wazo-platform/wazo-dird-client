@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2014-2015 Avencall
+# Copyright (C) 2014-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ setup(
     description='a simple client library for the xivo-dird HTTP interface',
 
     author='Avencall',
-    author_email='dev@avencall.com',
+    author_email='dev@proformatique.com',
 
     url='https://github.com/xivo-pbx/xivo-dird-client',
 
@@ -36,6 +36,7 @@ setup(
         'dird_client.commands': [
             'directories = xivo_dird_client.commands.directories:DirectoriesCommand',
             'personal = xivo_dird_client.commands.personal:PersonalCommand',
+            'phonebook = xivo_dird_client.commands.phonebook:PhonebookCommand',
         ],
     }
 )
