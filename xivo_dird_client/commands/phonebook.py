@@ -126,11 +126,27 @@ class PhonebookCommand(RESTCommand):
         if r.status_code != 204:
             self.raise_from_response(r)
 
+    def import_csv(self, tenant=None, phonebook_id=None, csv_text=None, encoding=None, token=None, **kwargs):
+        url = self._contact_import_url(tenant, phonebook_id)
+
+        content_type = 'text/csv; charset={}'.format(encoding) if encoding else 'text/csv'
+        headers = {'Content-Type': content_type,
+                   'X-Auth-Token': token}
+        r = self.session.post(url, data=csv_text, params=kwargs, headers=headers)
+
+        if r.status_code != 200:
+            self.raise_from_response(r)
+
+        return r.json()
+
     def _contact_all_url(self, tenant, phonebook_id):
         return '{}/{}'.format(self._phonebook_one_url(tenant, phonebook_id), 'contacts')
 
     def _contact_one_url(self, tenant, phonebook_id, contact_uuid):
         return '{}/{}'.format(self._contact_all_url(tenant, phonebook_id), contact_uuid)
+
+    def _contact_import_url(self, tenant, phonebook_id):
+        return '{}/import'.format(self._contact_all_url(tenant, phonebook_id))
 
     def _phonebook_all_url(self, tenant):
         return '{base_url}/{tenant}/phonebooks'.format(base_url=self.base_url,
