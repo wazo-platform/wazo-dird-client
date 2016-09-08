@@ -43,6 +43,8 @@ my_contact = {
 }
 new_personal = c.personal.edit(contact_id, my_contact, token='my-valid-token')
 c.personal.delete(my_new_contact['id'], token='my-valid-token')
+
+c.phonebook.import_csv(token='my-valid-token', tenant='default', phonebook_id=7, csv_text=csv_text, encoding='utf-8')
 ```
 
 
