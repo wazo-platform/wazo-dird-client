@@ -157,7 +157,9 @@ class PhonebookCommand(RESTCommand):
 
     @staticmethod
     def _new_headers(token, content_type=None):
-        headers = {'X-Auth-Token': token}
+        headers = {}
+        if token:
+            headers['X-Auth-Token'] = token
         if content_type:
             headers['Content-Type'] = content_type
         return headers
