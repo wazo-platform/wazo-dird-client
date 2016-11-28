@@ -28,7 +28,7 @@ setup(
     author='Avencall',
     author_email='dev@proformatique.com',
 
-    url='https://github.com/xivo-pbx/xivo-dird-client',
+    url='https://github.com/wazo-pbx/xivo-dird-client',
 
     packages=find_packages(),
 
