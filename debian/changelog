@@ -1,5 +1,5 @@
-xivo-dird-client (0.1) xivo-dev; urgency=low
+wazo-dird-client (0.1) wazo-dev; urgency=medium
 
   * Initial release.
 
- -- Pascal Cadotte Michaud <pcadottemichaud@avencall.com>  Fri, 26 Nov 2014 13:30:00 -0500
+ -- Wazo Maintainers <dev+pkg@wazo.community>  Wed, 02 May 2018 10:51:16 -0400
