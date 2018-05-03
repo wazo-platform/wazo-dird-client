@@ -1,14 +1,14 @@
-xivo-dird-client
+wazo-dird-client
 ================
 
-[![Build Status](https://jenkins.wazo.community/buildStatus/icon?job=xivo-dird-client)](https://jenkins.wazo.community/job/xivo-dird-client)
+[![Build Status](https://jenkins.wazo.community/buildStatus/icon?job=wazo-dird-client)](https://jenkins.wazo.community/job/wazo-dird-client)
 
-A python library to connect to xivo-dird.
+A python library to connect to wazo-dird.
 
 Usage:
 
 ```python
-from xivo_dird_client import Client
+from wazo_dird_client import Client
 
 c = Client('localhost', port=9489, version='0.1', timeout=3)
 

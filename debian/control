@@ -1,15 +1,15 @@
-Source: xivo-dird-client
+Source: wazo-dird-client
 Section: python
 Priority: extra
-Maintainer: Wazo Maintainers <dev.wazo@gmail.com>
+Maintainer: Wazo Maintainers <dev@wazo.community>
 Build-Depends: debhelper (>= 9), dh-python, python-all (>= 2.7), python-setuptools
 Standards-Version: 3.9.6
 X-Python-Version: >= 2.7
 
-Package: xivo-dird-client
+Package: wazo-dird-client
 Architecture: all
 Section: python
 Depends: ${python:Depends}, ${misc:Depends}, xivo-lib-rest-client, python-requests, python-stevedore
-Description: xivo-dird client library in python
+Description: wazo-dird client library in python
  Wazo is a system based on a powerful IPBX, to bring an easy to
  install solution for telephony and related services.

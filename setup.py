@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2014-2016 Avencall
+# Copyright 2014-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@ from setuptools import setup
 from setuptools import find_packages
 
 setup(
-    name='xivo_dird_client',
+    name='wazo_dird_client',
     version='0.1',
 
-    description='a simple client library for the xivo-dird HTTP interface',
+    description='a simple client library for the wazo-dird HTTP interface',
 
     author='Wazo Authors',
     author_email='dev.wazo@gmail.com',
@@ -34,9 +34,9 @@ setup(
 
     entry_points={
         'dird_client.commands': [
-            'directories = xivo_dird_client.commands.directories:DirectoriesCommand',
-            'personal = xivo_dird_client.commands.personal:PersonalCommand',
-            'phonebook = xivo_dird_client.commands.phonebook:PhonebookCommand',
+            'directories = wazo_dird_client.commands.directories:DirectoriesCommand',
+            'personal = wazo_dird_client.commands.personal:PersonalCommand',
+            'phonebook = wazo_dird_client.commands.phonebook:PhonebookCommand',
         ],
     }
 )
