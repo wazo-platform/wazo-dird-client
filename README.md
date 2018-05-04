@@ -1,7 +1,8 @@
-xivo-dird-client
-================
+xivo-dird-client (DEPRECATED)
+=============================
 
-[![Build Status](https://jenkins.wazo.community/buildStatus/icon?job=xivo-dird-client)](https://jenkins.wazo.community/job/xivo-dird-client)
+### This repository is deprecated, use https://github.com/wazo-pbx/wazo-dird-client/
+
 
 A python library to connect to xivo-dird.
 
