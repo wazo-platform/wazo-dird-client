@@ -13,7 +13,7 @@ setup(
     description='a simple client library for the wazo-dird HTTP interface',
 
     author='Wazo Authors',
-    author_email='dev.wazo@gmail.com',
+    author_email='dev@wazo.community',
 
     url='http://wazo.community',
 
@@ -21,6 +21,7 @@ setup(
 
     entry_points={
         'dird_client.commands': [
+            'backends = wazo_dird_client.commands.backends:BackendsCommand',
             'directories = wazo_dird_client.commands.directories:DirectoriesCommand',
             'personal = wazo_dird_client.commands.personal:PersonalCommand',
             'phonebook = wazo_dird_client.commands.phonebook:PhonebookCommand',
