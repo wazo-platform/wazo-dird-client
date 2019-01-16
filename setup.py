@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright 2014-2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2014-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0+
 
 from setuptools import setup
@@ -25,6 +25,7 @@ setup(
             'directories = wazo_dird_client.commands.directories:DirectoriesCommand',
             'personal = wazo_dird_client.commands.personal:PersonalCommand',
             'phonebook = wazo_dird_client.commands.phonebook:PhonebookCommand',
+            'wazo_source = wazo_dird_client.commands.wazo_source:Command',
         ],
     }
 )
