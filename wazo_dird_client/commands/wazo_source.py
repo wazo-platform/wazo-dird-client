@@ -20,6 +20,11 @@ class Command(RESTCommand):
         self.raise_from_response(r)
         return r.json()
 
+    def delete(self, source_uuid):
+        url = '/'.join([self.base_url, source_uuid])
+        r = self.session.delete(url, headers=self._ro_headers)
+        self.raise_from_response(r)
+
     def get(self, source_uuid):
         url = '/'.join([self.base_url, source_uuid])
         r = self.session.get(url, headers=self._ro_headers)
