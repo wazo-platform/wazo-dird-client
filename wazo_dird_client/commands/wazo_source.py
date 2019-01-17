@@ -30,3 +30,9 @@ class Command(RESTCommand):
         r = self.session.get(url, headers=self._ro_headers)
         self.raise_from_response(r)
         return r.json()
+
+    def edit(self, source_uuid, body):
+        url = '/'.join([self.base_url, source_uuid])
+        r = self.session.put(url, json=body, headers=self._rw_headers)
+        self.raise_from_response(r)
+        return r.json()
