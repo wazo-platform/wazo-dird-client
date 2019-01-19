@@ -26,6 +26,7 @@ setup(
             'personal = wazo_dird_client.commands.personal:PersonalCommand',
             'phonebook = wazo_dird_client.commands.phonebook:PhonebookCommand',
             'wazo_source = wazo_dird_client.commands.wazo_source:Command',
+            'phonebook_source = wazo_dird_client.commands.phonebook_source:Command',
         ],
     }
 )
