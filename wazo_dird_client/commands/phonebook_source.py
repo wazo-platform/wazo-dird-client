@@ -7,4 +7,4 @@ from wazo_dird_client.commands.helpers.base_source_command import SourceCommand
 
 class Command(SourceCommand):
 
-    resource = 'backends/wazo/sources'
+    resource = 'backends/phonebook/sources'
