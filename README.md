@@ -48,6 +48,18 @@ new_personal = c.personal.edit(contact_id, my_contact, token='my-valid-token')
 c.personal.delete(my_new_contact['id'], token='my-valid-token')
 
 c.phonebook.import_csv(token='my-valid-token', tenant='default', phonebook_id=7, csv_text=csv_text, encoding='utf-8')
+
+sources = c.wazo_source.list(search='some-source', limit=2, offset=2, recurse=False, order='name', direction='desc')
+source = c.wazo_source.create(body)
+source = c.wazo_source.get(source['id'])
+c.wazo_source.update(source['id'])
+c.wazo_source.delete(source['id'])
+
+sources = c.phonebook_source.list(search='some-source', limit=2, offset=2, recurse=False, order='name', direction='desc')
+source = c.phonebook_source.create(body)
+source = c.phonebook_source.get(source['id'])
+c.phonebook_source.update(source['id'])
+c.phonebook_source.delete(source['id'])
 ```
 
 
