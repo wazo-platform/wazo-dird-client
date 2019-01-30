@@ -22,10 +22,14 @@ setup(
     entry_points={
         'dird_client.commands': [
             'backends = wazo_dird_client.commands.backends:BackendsCommand',
+            'csv_source = wazo_dird_client.commands.csv_source:Command',
+            'csv_ws_source = wazo_dird_client.commands.csv_ws_source:Command',
             'directories = wazo_dird_client.commands.directories:DirectoriesCommand',
+            'ldap_source = wazo_dird_client.commands.ldap_source:Command',
             'personal = wazo_dird_client.commands.personal:PersonalCommand',
             'phonebook = wazo_dird_client.commands.phonebook:PhonebookCommand',
             'wazo_source = wazo_dird_client.commands.wazo_source:Command',
+            'personal_source = wazo_dird_client.commands.personal_source:Command',
             'phonebook_source = wazo_dird_client.commands.phonebook_source:Command',
         ],
     }

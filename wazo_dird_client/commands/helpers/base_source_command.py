@@ -34,7 +34,6 @@ class SourceCommand(RESTCommand):
         url = '/'.join([self.base_url, source_uuid])
         r = self.session.put(url, json=body, headers=self._rw_headers)
         self.raise_from_response(r)
-        return r.json()
 
     def list(self, **kwargs):
         r = self.session.get(self.base_url, params=kwargs, headers=self._ro_headers)
