@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2014-2015 Avencall
+# Copyright 2014-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that
@@ -24,7 +24,8 @@ class TestDirectories(RESTCommandTestCase):
         self.session.get.assert_called_once_with(
             '{base_url}/lookup/default'.format(base_url=self.base_url),
             params={'term': 'Alice'},
-            headers={'X-Auth-Token': s.token})
+            headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_lookup_when_not_200(self):
@@ -40,7 +41,8 @@ class TestDirectories(RESTCommandTestCase):
         self.session.get.assert_called_once_with(
             '{base_url}/reverse/default/abcd-1234'.format(base_url=self.base_url),
             params={'exten': '1234'},
-            headers={'X-Auth-Token': s.token})
+            headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_reverse_when_not_200(self):
@@ -56,7 +58,8 @@ class TestDirectories(RESTCommandTestCase):
         self.session.get.assert_called_once_with(
             '{base_url}/lookup/default/headers'.format(base_url=self.base_url),
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_headers_when_not_200(self):
@@ -72,7 +75,8 @@ class TestDirectories(RESTCommandTestCase):
         self.session.get.assert_called_once_with(
             '{base_url}/favorites/default'.format(base_url=self.base_url),
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_favorites_when_not_200(self):
@@ -88,7 +92,8 @@ class TestDirectories(RESTCommandTestCase):
         self.session.put.assert_called_once_with(
             '{base_url}/favorites/my_directory/my_contact'.format(base_url=self.base_url),
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
+        )
         assert_that(result, none())
 
     def test_new_favorite_when_not_204(self):
@@ -104,7 +109,8 @@ class TestDirectories(RESTCommandTestCase):
         self.session.delete.assert_called_once_with(
             '{base_url}/favorites/my_directory/my_contact'.format(base_url=self.base_url),
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
+        )
         assert_that(result, none())
 
     def test_remove_favorite_when_not_204(self):
@@ -120,7 +126,8 @@ class TestDirectories(RESTCommandTestCase):
         self.session.get.assert_called_once_with(
             '{base_url}/personal/default'.format(base_url=self.base_url),
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_personal_when_not_200(self):
