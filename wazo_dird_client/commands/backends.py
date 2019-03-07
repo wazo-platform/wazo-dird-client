@@ -68,4 +68,4 @@ class BackendsCommand(RESTCommand):
         return '/'.join([self.base_url, backend, 'sources'])
 
     def _build_url(self, backend, source_uuid, *args):
-        return '/'.join([self.base_url, backend, 'sources', source_uuid] + args)
+        return '/'.join([self.base_url, backend, 'sources', source_uuid] + list(args))
