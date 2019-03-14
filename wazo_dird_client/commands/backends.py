@@ -32,7 +32,7 @@ class BackendsCommand(RESTCommand):
     def edit_source(self, backend, source_uuid, body):
         url = self._build_url(backend, source_uuid)
 
-        r = self.session.put(url, headers=self._ro_headers, json=body)
+        r = self.session.put(url, headers=self._rw_headers, json=body)
         self.raise_from_response(r)
 
     def get_source(self, backend, source_uuid):
