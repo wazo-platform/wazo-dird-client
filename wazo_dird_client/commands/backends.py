@@ -58,11 +58,10 @@ class BackendsCommand(RESTCommand):
 
     def list_contacts_from_source(self, backend, source_uuid, tenant_uuid=None, **kwargs):
         url = self._build_url(backend, source_uuid, 'contacts')
-        header = dict(self._ro_headers)
+        headers = dict(self._ro_headers)
         tenant_uuid = tenant_uuid or self._client.tenant()
         if tenant_uuid:
-            header['Wazo-Tenant'] = tenant_uuid
-
+            headers['Wazo-Tenant'] = tenant_uuid
 
         r = self.session.get(url, headers=headers, params=kwargs)
         self.raise_from_response(r)
