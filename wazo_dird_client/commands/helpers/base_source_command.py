@@ -12,6 +12,7 @@ class SourceCommand(RESTCommand):
 
     def create(self, body, tenant_uuid=None):
         headers = dict(self._rw_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
         if tenant_uuid:
             headers['Wazo-Tenant'] = tenant_uuid
 
