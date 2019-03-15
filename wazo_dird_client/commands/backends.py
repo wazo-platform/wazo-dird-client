@@ -13,8 +13,8 @@ class BackendsCommand(RESTCommand):
 
     def create_source(self, backend, body, tenant_uuid=None):
         url = self._build_base_url(backend)
-
         headers = dict(self._rw_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
         if tenant_uuid:
             headers['Wazo-Tenant'] = tenant_uuid
 
@@ -58,8 +58,8 @@ class BackendsCommand(RESTCommand):
 
     def list_contacts_from_source(self, backend, source_uuid, tenant_uuid=None, **kwargs):
         url = self._build_url(backend, source_uuid, 'contacts')
-        header = self._ro_headers
-
+        header = dict(self._ro_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
         if tenant_uuid:
             header['Wazo-Tenant'] = tenant_uuid
 
