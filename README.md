@@ -60,6 +60,31 @@ source = c.phonebook_source.create(body)
 source = c.phonebook_source.get(source['id'])
 c.phonebook_source.update(source['id'])
 c.phonebook_source.delete(source['id'])
+
+# Creating a profile
+body = {
+    'name': 'default',
+    'display': display,
+    'services': {
+        'lookup': {'sources': [source_1, source_2, source_3], 'timeout': 5},
+        'reverse': {'sources': [source_2, source_3], 'timeout': 0.5},
+        'favorites': {'sources': [source_1, source_2]},
+    },
+}
+profile = c.profiles.create(body)
+
+# Updating a profile
+profile['name']: 'notdefault'
+c.profiles.edit(profile['uuid'], profile)
+
+# Getting a profile
+updated_profile = c.profiles.get(profile['uuid'])
+
+# Listing profiles
+profiles = c.profiles.list(order='name', direction='asc', limit=10, offset=30, search='def')
+
+# Deleting a profile
+c.profiles.delete(profile['uuid'])
 ```
 
 
