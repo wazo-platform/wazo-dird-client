@@ -61,6 +61,8 @@ source = c.phonebook_source.get(source['id'])
 c.phonebook_source.update(source['id'])
 c.phonebook_source.delete(source['id'])
 
+all_sources = c.sources.list(search='foo', limit=2, offset=2, order='backend')
+
 # Creating a profile
 body = {
     'name': 'default',
