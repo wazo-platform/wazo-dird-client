@@ -4,6 +4,7 @@
 
 from xivo_lib_rest_client import RESTCommand
 
+
 class SourcesCommand(RESTCommand):
 
     resource = 'sources'
