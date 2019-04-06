@@ -87,10 +87,9 @@ class DirectoriesCommand(RESTCommand):
 
         return r.json()
 
-    def list_sources(self, profile, service, token=None, tenant_uuid=None, **list_params):
-        url = '{base_url}/{service}/{profile}/sources'.format(
+    def list_sources(self, profile, token=None, tenant_uuid=None, **list_params):
+        url = '{base_url}/{profile}/sources'.format(
             base_url=self.base_url,
-            service=service,
             profile=profile,
         )
         headers = self._build_headers(token, tenant_uuid)
