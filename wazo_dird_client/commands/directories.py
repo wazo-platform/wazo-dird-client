@@ -87,6 +87,19 @@ class DirectoriesCommand(RESTCommand):
 
         return r.json()
 
+    def list_sources(self, profile, token=None, tenant_uuid=None, **list_params):
+        url = '{base_url}/{profile}/sources'.format(
+            base_url=self.base_url,
+            profile=profile,
+        )
+        headers = self._build_headers(token, tenant_uuid)
+
+        r = self.session.get(url, params=list_params, headers=headers)
+        if r.status_code != 200:
+            self.raise_from_response(r)
+
+        return r.json()
+
     def _build_headers(self, token, tenant_uuid):
         headers = {'Accept': 'application/json'}
         if token:
