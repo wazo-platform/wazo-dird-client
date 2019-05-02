@@ -23,22 +23,34 @@ class BackendsCommand(RESTCommand):
 
         return r.json()
 
-    def delete_source(self, backend, source_uuid):
+    def delete_source(self, backend, source_uuid, tenant_uuid=None):
         url = self._build_url(backend, source_uuid)
+        headers = dict(self._ro_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
+        if tenant_uuid:
+            headers['Wazo-Tenant'] = tenant_uuid
 
-        r = self.session.delete(url, headers=self._ro_headers)
+        r = self.session.delete(url, headers=headers)
         self.raise_from_response(r)
 
-    def edit_source(self, backend, source_uuid, body):
+    def edit_source(self, backend, source_uuid, body, tenant_uuid=None):
         url = self._build_url(backend, source_uuid)
+        headers = dict(self._rw_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
+        if tenant_uuid:
+            headers['Wazo-Tenant'] = tenant_uuid
 
-        r = self.session.put(url, headers=self._rw_headers, json=body)
+        r = self.session.put(url, headers=headers, json=body)
         self.raise_from_response(r)
 
-    def get_source(self, backend, source_uuid):
+    def get_source(self, backend, source_uuid, tenant_uuid=None):
         url = self._build_url(backend, source_uuid)
+        headers = dict(self._ro_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
+        if tenant_uuid:
+            headers['Wazo-Tenant'] = tenant_uuid
 
-        r = self.session.get(url, headers=self._ro_headers)
+        r = self.session.get(url, headers=headers)
         self.raise_from_response(r)
 
         return r.json()
@@ -48,10 +60,14 @@ class BackendsCommand(RESTCommand):
         self.raise_from_response(r)
         return r.json()
 
-    def list_sources(self, backend, **kwargs):
+    def list_sources(self, backend, tenant_uuid=None, **kwargs):
         url = self._build_base_url(backend)
+        headers = dict(self._ro_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
+        if tenant_uuid:
+            headers['Wazo-Tenant'] = tenant_uuid
 
-        r = self.session.get(url, headers=self._ro_headers, params=kwargs)
+        r = self.session.get(url, headers=headers, params=kwargs)
         self.raise_from_response(r)
 
         return r.json()
