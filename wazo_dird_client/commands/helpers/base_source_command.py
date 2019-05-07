@@ -20,23 +20,43 @@ class SourceCommand(RESTCommand):
         self.raise_from_response(r)
         return r.json()
 
-    def delete(self, source_uuid):
+    def delete(self, source_uuid, tenant_uuid=None):
+        headers = dict(self._ro_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
+        if tenant_uuid:
+            headers['Wazo-Tenant'] = tenant_uuid
+
         url = '/'.join([self.base_url, source_uuid])
-        r = self.session.delete(url, headers=self._ro_headers)
+        r = self.session.delete(url, headers=headers)
         self.raise_from_response(r)
 
-    def get(self, source_uuid):
+    def get(self, source_uuid, tenant_uuid=None):
+        headers = dict(self._ro_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
+        if tenant_uuid:
+            headers['Wazo-Tenant'] = tenant_uuid
+
         url = '/'.join([self.base_url, source_uuid])
-        r = self.session.get(url, headers=self._ro_headers)
+        r = self.session.get(url, headers=headers)
         self.raise_from_response(r)
         return r.json()
 
-    def edit(self, source_uuid, body):
+    def edit(self, source_uuid, body, tenant_uuid=None):
+        headers = dict(self._rw_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
+        if tenant_uuid:
+            headers['Wazo-Tenant'] = tenant_uuid
+
         url = '/'.join([self.base_url, source_uuid])
-        r = self.session.put(url, json=body, headers=self._rw_headers)
+        r = self.session.put(url, json=body, headers=headers)
         self.raise_from_response(r)
 
-    def list(self, **kwargs):
-        r = self.session.get(self.base_url, params=kwargs, headers=self._ro_headers)
+    def list(self, tenant_uuid=None, **kwargs):
+        headers = dict(self._ro_headers)
+        tenant_uuid = tenant_uuid or self._client.tenant()
+        if tenant_uuid:
+            headers['Wazo-Tenant'] = tenant_uuid
+
+        r = self.session.get(self.base_url, params=kwargs, headers=headers)
         self.raise_from_response(r)
         return r.json()

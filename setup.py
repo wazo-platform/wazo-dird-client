@@ -22,6 +22,7 @@ setup(
     entry_points={
         'dird_client.commands': [
             'backends = wazo_dird_client.commands.backends:BackendsCommand',
+            'conference_source = wazo_dird_client.commands.conference_source:Command',
             'csv_source = wazo_dird_client.commands.csv_source:Command',
             'csv_ws_source = wazo_dird_client.commands.csv_ws_source:Command',
             'directories = wazo_dird_client.commands.directories:DirectoriesCommand',
