@@ -35,6 +35,7 @@ setup(
             'phonebook_source = wazo_dird_client.commands.phonebook_source:Command',
             'profiles = wazo_dird_client.commands.profiles:ProfilesCommand',
             'sources = wazo_dird_client.commands.sources:SourcesCommand',
+            'status = wazo_dird_client.commands.status:StatusCommand',
         ],
     }
 )
