@@ -72,12 +72,14 @@ class BackendsCommand(RESTCommand):
 
         return r.json()
 
-    def list_contacts_from_source(self, backend, source_uuid, tenant_uuid=None, **kwargs):
+    def list_contacts_from_source(self, backend, source_uuid, tenant_uuid=None, token=None, **kwargs):
         url = self._build_url(backend, source_uuid, 'contacts')
         headers = dict(self._ro_headers)
         tenant_uuid = tenant_uuid or self._client.tenant()
         if tenant_uuid:
             headers['Wazo-Tenant'] = tenant_uuid
+        if token:
+            headers['X-Auth-Token'] = token
 
         r = self.session.get(url, headers=headers, params=kwargs)
         self.raise_from_response(r)
