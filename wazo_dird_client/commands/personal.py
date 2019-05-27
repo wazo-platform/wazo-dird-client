@@ -25,6 +25,7 @@ class PersonalCommand(DirdRESTCommand):
 
     def export_csv(self, token=None, tenant_uuid=None, **kwargs):
         headers = self.build_ro_headers(tenant_uuid, token)
+        del headers['Accept']
         kwargs['format'] = 'text/csv'
         r = self.session.get(self.base_url, params=kwargs, headers=headers)
 
@@ -49,6 +50,7 @@ class PersonalCommand(DirdRESTCommand):
     def import_csv(self, csv_text, encoding=None, token=None, tenant_uuid=None, **kwargs):
         url = '{base_url}/import'.format(base_url=self.base_url)
         headers = self.build_rw_headers(tenant_uuid, token)
+        del headers['Accept']
         content_type = 'text/csv; charset={}'.format(encoding) if encoding else 'text/csv'
         headers['Content-Type'] = content_type,
         r = self.session.post(url, data=csv_text, params=kwargs, headers=headers)
