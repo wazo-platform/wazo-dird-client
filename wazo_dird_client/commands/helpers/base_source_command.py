@@ -19,7 +19,7 @@ class SourceCommand(DirdRESTCommand):
         r = self.session.delete(url, headers=headers)
         self.raise_from_response(r)
 
-    def get(self, source_uuid, token=None, tenant_uuid=None):
+    def get(self, source_uuid, tenant_uuid=None, token=None):
         headers = self.build_ro_headers(tenant_uuid, token)
         url = '/'.join([self.base_url, source_uuid])
         r = self.session.get(url, headers=headers)
