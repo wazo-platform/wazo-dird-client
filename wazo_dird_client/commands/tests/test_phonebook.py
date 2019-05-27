@@ -2,8 +2,6 @@
 # Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import json
-
 from xivo_lib_rest_client.tests.command import RESTCommandTestCase
 
 from hamcrest import assert_that, equal_to, none
@@ -29,9 +27,11 @@ class TestPhonebookContact(RESTCommandTestCase):
                                              phonebook_id=self.phonebook_id,
                                              token=s.token, contact_body=contact_body)
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(base_url=self.base_url,
-                                                                              tenant=self.tenant,
-                                                                              phonebook_id=self.phonebook_id)
+        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(
+            base_url=self.base_url,
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+        )
         self.session.post.assert_called_once_with(
             url,
             json=contact_body,
@@ -59,9 +59,11 @@ class TestPhonebookContact(RESTCommandTestCase):
                                             token=s.token,
                                             phonebook_id=self.phonebook_id)
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(base_url=self.base_url,
-                                                                              tenant=self.tenant,
-                                                                              phonebook_id=self.phonebook_id)
+        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(
+            base_url=self.base_url,
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+        )
         self.session.get.assert_called_once_with(
             url,
             params={},
@@ -128,7 +130,7 @@ class TestPhonebookContact(RESTCommandTestCase):
 
         self.session.put.assert_called_once_with(
             url,
-            data=json.dumps(body),
+            json=body,
             params={},
             headers={
                 'X-Auth-Token': s.token,
@@ -234,7 +236,10 @@ class TestPhonebook(RESTCommandTestCase):
     def test_get_when_not_200(self):
         self.session.get.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.get, token=s.token, tenant='mytenant', phonebook_id=42)
+        self.assertRaisesHTTPError(
+            self.command.get,
+            token=s.token, tenant='mytenant', phonebook_id=42,
+        )
 
     def test_edit(self):
         self.session.put.return_value = self.new_response(200, json={'return': 'value'})
@@ -263,7 +268,10 @@ class TestPhonebook(RESTCommandTestCase):
     def test_edit_when_not_200(self):
         self.session.put.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.edit, tenant=s.tenant, phonebook_body={}, token=s.token)
+        self.assertRaisesHTTPError(
+            self.command.edit,
+            tenant=s.tenant, phonebook_body={}, token=s.token,
+        )
 
     def test_delete(self):
         self.session.delete.return_value = self.new_response(204)
@@ -271,9 +279,11 @@ class TestPhonebook(RESTCommandTestCase):
 
         result = self.command.delete(tenant=tenant, phonebook_id=phonebook_id, token=s.token)
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(base_url=self.base_url,
-                                                                     tenant=tenant,
-                                                                     phonebook_id=phonebook_id)
+        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(
+            base_url=self.base_url,
+            tenant=tenant,
+            phonebook_id=phonebook_id,
+        )
         self.session.delete.assert_called_once_with(
             url,
             params={},

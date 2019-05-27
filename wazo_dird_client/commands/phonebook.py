@@ -2,8 +2,6 @@
 # Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import json
-
 from wazo_dird_client.commands.helpers import DirdRESTCommand
 
 
@@ -117,7 +115,7 @@ class PhonebookCommand(DirdRESTCommand):
     ):
         url = self._contact_one_url(tenant, phonebook_id, contact_uuid)
         headers = self.build_rw_headers(tenant_uuid, token)
-        r = self.session.put(url, data=json.dumps(contact_body), params=kwargs, headers=headers)
+        r = self.session.put(url, json=contact_body, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
 

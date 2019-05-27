@@ -169,7 +169,10 @@ class TestPersonal(RESTCommandTestCase):
     def test_edit_when_not_200(self):
         self.session.put.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.edit, 'my_contact_id', {'firstname': 'Alice'}, s.token)
+        self.assertRaisesHTTPError(
+            self.command.edit,
+            'my_contact_id', {'firstname': 'Alice'}, s.token,
+        )
 
     def test_delete(self):
         self.session.delete.return_value = self.new_response(204)
