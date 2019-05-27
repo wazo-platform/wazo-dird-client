@@ -52,7 +52,7 @@ class PersonalCommand(DirdRESTCommand):
         headers = self.build_rw_headers(tenant_uuid, token)
         del headers['Accept']
         content_type = 'text/csv; charset={}'.format(encoding) if encoding else 'text/csv'
-        headers['Content-Type'] = content_type,
+        headers['Content-Type'] = content_type
         r = self.session.post(url, data=csv_text, params=kwargs, headers=headers)
         if r.status_code != 201:
             self.raise_from_response(r)
