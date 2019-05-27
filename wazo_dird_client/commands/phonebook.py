@@ -14,7 +14,7 @@ class PhonebookCommand(DirdRESTCommand):
     def create(self, token=None, tenant=None, phonebook_body=None, tenant_uuid=None, **kwargs):
         url = self._phonebook_all_url(tenant)
         headers = self.build_rw_headers(tenant_uuid, token)
-        r = self.session.post(url, data=json.dumps(phonebook_body), params=kwargs, headers=headers)
+        r = self.session.post(url, json=phonebook_body, params=kwargs, headers=headers)
         if r.status_code != 201:
             self.raise_from_response(r)
 
@@ -24,14 +24,14 @@ class PhonebookCommand(DirdRESTCommand):
             self,
             token=None,
             tenant=None,
-            id_=None,
-            body=None,
+            phonebook_id=None,
+            contact_body=None,
             tenant_uuid=None,
             **kwargs
     ):
-        url = self._contact_all_url(tenant, id_)
+        url = self._contact_all_url(tenant, phonebook_id)
         headers = self.build_rw_headers(tenant_uuid, token)
-        r = self.session.post(url, data=json.dumps(body), params=kwargs, headers=headers)
+        r = self.session.post(url, json=contact_body, params=kwargs, headers=headers)
         if r.status_code != 201:
             self.raise_from_response(r)
 
@@ -62,10 +62,18 @@ class PhonebookCommand(DirdRESTCommand):
         if r.status_code != 204:
             self.raise_from_response(r)
 
-    def edit(self, token=None, tenant=None, id_=None, body=None, tenant_uuid=None, **kwargs):
-        url = self._phonebook_one_url(tenant, id_)
+    def edit(
+            self,
+            token=None,
+            tenant=None,
+            phonebook_id=None,
+            phonebook_body=None,
+            tenant_uuid=None,
+            **kwargs
+    ):
+        url = self._phonebook_one_url(tenant, phonebook_id)
         headers = self.build_rw_headers(tenant_uuid, token)
-        r = self.session.put(url, data=json.dumps(body), params=kwargs, headers=headers)
+        r = self.session.put(url, json=phonebook_body, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
 
