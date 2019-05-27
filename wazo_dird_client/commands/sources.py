@@ -2,20 +2,15 @@
 # Copyright 2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from xivo_lib_rest_client import RESTCommand
+from wazo_dird_client.commands.helpers import DirdRESTCommand
 
 
-class SourcesCommand(RESTCommand):
+class SourcesCommand(DirdRESTCommand):
 
     resource = 'sources'
-    _ro_headers = {'Accept': 'application/json'}
 
-    def list(self, tenant_uuid=None, **kwargs):
-        headers = dict(self._ro_headers)
-        tenant_uuid = tenant_uuid or self._client.tenant()
-        if tenant_uuid:
-            headers['Wazo-Tenant'] = tenant_uuid
-
+    def list(self, tenant_uuid=None, token=None, **kwargs):
+        headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.get(self.base_url, params=kwargs, headers=headers)
         self.raise_from_response(r)
         return r.json()

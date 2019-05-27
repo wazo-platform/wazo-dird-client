@@ -2,17 +2,16 @@
 # Copyright 2014-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from xivo_lib_rest_client import RESTCommand
+from wazo_dird_client.commands.helpers import DirdRESTCommand
 
 
-class DirectoriesCommand(RESTCommand):
+class DirectoriesCommand(DirdRESTCommand):
 
     resource = 'directories'
 
     def lookup(self, profile, token=None, tenant_uuid=None, **kwargs):
         url = '{base_url}/lookup/{profile}'.format(base_url=self.base_url, profile=profile)
-        headers = self._build_headers(token, tenant_uuid)
-
+        headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -25,8 +24,7 @@ class DirectoriesCommand(RESTCommand):
             profile=profile,
             xivo_user_uuid=xivo_user_uuid,
         )
-        headers = self._build_headers(token, tenant_uuid)
-
+        headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -35,8 +33,7 @@ class DirectoriesCommand(RESTCommand):
 
     def headers(self, profile, token=None, tenant_uuid=None, **kwargs):
         url = '{base_url}/lookup/{profile}/headers'.format(base_url=self.base_url, profile=profile)
-        headers = self._build_headers(token, tenant_uuid)
-
+        headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -45,8 +42,7 @@ class DirectoriesCommand(RESTCommand):
 
     def favorites(self, profile, token=None, tenant_uuid=None, **kwargs):
         url = '{base_url}/favorites/{profile}'.format(base_url=self.base_url, profile=profile)
-        headers = self._build_headers(token, tenant_uuid)
-
+        headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -59,8 +55,7 @@ class DirectoriesCommand(RESTCommand):
             directory=directory,
             contact=contact,
         )
-        headers = self._build_headers(token, tenant_uuid)
-
+        headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.put(url, params=kwargs, headers=headers)
         if r.status_code != 204:
             self.raise_from_response(r)
@@ -71,16 +66,14 @@ class DirectoriesCommand(RESTCommand):
             directory=directory,
             contact=contact,
         )
-        headers = self._build_headers(token, tenant_uuid)
-
+        headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.delete(url, params=kwargs, headers=headers)
         if r.status_code != 204:
             self.raise_from_response(r)
 
     def personal(self, profile, token=None, tenant_uuid=None, **kwargs):
         url = '{base_url}/personal/{profile}'.format(base_url=self.base_url, profile=profile)
-        headers = self._build_headers(token, tenant_uuid)
-
+        headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -92,21 +85,9 @@ class DirectoriesCommand(RESTCommand):
             base_url=self.base_url,
             profile=profile,
         )
-        headers = self._build_headers(token, tenant_uuid)
-
+        headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.get(url, params=list_params, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
 
         return r.json()
-
-    def _build_headers(self, token, tenant_uuid):
-        headers = {'Accept': 'application/json'}
-        if token:
-            headers['X-Auth-Token'] = token
-
-        tenant_uuid = tenant_uuid or self._client.tenant()
-        if tenant_uuid:
-            headers['Wazo-Tenant'] = tenant_uuid
-
-        return headers
