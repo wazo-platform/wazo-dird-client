@@ -2,7 +2,7 @@
 # Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from wazo_dird_client.commands.helpers import DirdRESTCommand
+from wazo_dird_client.commands.helpers.base_command import DirdRESTCommand
 
 
 class PhonebookCommand(DirdRESTCommand):
