@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2016 Avencall
+# Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
-
-import json
 
 from xivo_lib_rest_client.tests.command import RESTCommandTestCase
 
@@ -29,15 +27,21 @@ class TestPhonebookContact(RESTCommandTestCase):
                                              phonebook_id=self.phonebook_id,
                                              token=s.token, contact_body=contact_body)
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(base_url=self.base_url,
-                                                                              tenant=self.tenant,
-                                                                              phonebook_id=self.phonebook_id)
+        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(
+            base_url=self.base_url,
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+        )
         self.session.post.assert_called_once_with(
             url,
-            data=json.dumps(contact_body),
+            json=contact_body,
             params={},
-            headers={'X-Auth-Token': s.token,
-                     'Content-Type': 'application/json'})
+            headers={
+                'Accept': 'application/json',
+                'X-Auth-Token': s.token,
+                'Content-Type': 'application/json',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_create_when_not_201(self):
@@ -55,10 +59,19 @@ class TestPhonebookContact(RESTCommandTestCase):
                                             token=s.token,
                                             phonebook_id=self.phonebook_id)
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(base_url=self.base_url,
-                                                                              tenant=self.tenant,
-                                                                              phonebook_id=self.phonebook_id)
-        self.session.get.assert_called_once_with(url, params={}, headers={'X-Auth-Token': s.token})
+        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(
+            base_url=self.base_url,
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+        )
+        self.session.get.assert_called_once_with(
+            url,
+            params={},
+            headers={
+                'X-Auth-Token': s.token,
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_list_when_not_200(self):
@@ -80,7 +93,14 @@ class TestPhonebookContact(RESTCommandTestCase):
                          tenant=self.tenant,
                          phonebook_id=self.phonebook_id,
                          contact_uuid=s.contact_uuid)
-        self.session.get.assert_called_once_with(url, params={}, headers={'X-Auth-Token': s.token})
+        self.session.get.assert_called_once_with(
+            url,
+            params={},
+            headers={
+                'X-Auth-Token': s.token,
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_get_when_not_200(self):
@@ -110,10 +130,14 @@ class TestPhonebookContact(RESTCommandTestCase):
 
         self.session.put.assert_called_once_with(
             url,
-            data=json.dumps(body),
+            json=body,
             params={},
-            headers={'X-Auth-Token': s.token,
-                     'Content-Type': 'application/json'})
+            headers={
+                'X-Auth-Token': s.token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_edit_when_not_200(self):
@@ -137,7 +161,11 @@ class TestPhonebookContact(RESTCommandTestCase):
         self.session.delete.assert_called_once_with(
             url,
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={
+                'X-Auth-Token': s.token,
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, none())
 
     def test_delete_when_not_204(self):
@@ -161,10 +189,14 @@ class TestPhonebook(RESTCommandTestCase):
         url = '{base_url}/mytenant/phonebooks'.format(base_url=self.base_url)
         self.session.post.assert_called_once_with(
             url,
-            data=json.dumps(phonebook_body),
+            json=phonebook_body,
             params={},
-            headers={'X-Auth-Token': s.token,
-                     'Content-Type': 'application/json'})
+            headers={
+                'X-Auth-Token': s.token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_create_when_not_201(self):
@@ -204,7 +236,10 @@ class TestPhonebook(RESTCommandTestCase):
     def test_get_when_not_200(self):
         self.session.get.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.get, token=s.token, tenant='mytenant', phonebook_id=42)
+        self.assertRaisesHTTPError(
+            self.command.get,
+            token=s.token, tenant='mytenant', phonebook_id=42,
+        )
 
     def test_edit(self):
         self.session.put.return_value = self.new_response(200, json={'return': 'value'})
@@ -220,16 +255,23 @@ class TestPhonebook(RESTCommandTestCase):
                                                                      phonebook_id=phonebook_id)
         self.session.put.assert_called_once_with(
             url,
-            data=json.dumps(body),
+            json=body,
             params={},
-            headers={'X-Auth-Token': s.token,
-                     'Content-Type': 'application/json'})
+            headers={
+                'X-Auth-Token': s.token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_edit_when_not_200(self):
         self.session.put.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.edit, tenant=s.tenant, phonebook_body={}, token=s.token)
+        self.assertRaisesHTTPError(
+            self.command.edit,
+            tenant=s.tenant, phonebook_body={}, token=s.token,
+        )
 
     def test_delete(self):
         self.session.delete.return_value = self.new_response(204)
@@ -237,13 +279,19 @@ class TestPhonebook(RESTCommandTestCase):
 
         result = self.command.delete(tenant=tenant, phonebook_id=phonebook_id, token=s.token)
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(base_url=self.base_url,
-                                                                     tenant=tenant,
-                                                                     phonebook_id=phonebook_id)
+        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(
+            base_url=self.base_url,
+            tenant=tenant,
+            phonebook_id=phonebook_id,
+        )
         self.session.delete.assert_called_once_with(
             url,
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={
+                'X-Auth-Token': s.token,
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, none())
 
     def test_delete_when_not_204(self):
@@ -254,4 +302,10 @@ class TestPhonebook(RESTCommandTestCase):
 
     def _assert_get(self, url, token):
         self.session.get.assert_called_once_with(
-            url, params={}, headers={'X-Auth-Token': token})
+            url,
+            params={},
+            headers={
+                'X-Auth-Token': token,
+                'Accept': 'application/json',
+            },
+        )
