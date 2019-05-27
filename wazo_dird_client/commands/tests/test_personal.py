@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2014-2015 Avencall
+# Copyright 2014-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import json
-
-from hamcrest import assert_that
-from hamcrest import equal_to
-from hamcrest import is_
-from hamcrest import none
+from hamcrest import (
+    assert_that,
+    equal_to,
+    is_,
+    none,
+)
 from mock import sentinel as s
 
 from xivo_lib_rest_client.tests.command import RESTCommandTestCase
@@ -27,7 +27,11 @@ class TestPersonal(RESTCommandTestCase):
         self.session.get.assert_called_once_with(
             self.base_url,
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={
+                'X-Auth-Token': s.token,
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_purge(self):
@@ -38,7 +42,11 @@ class TestPersonal(RESTCommandTestCase):
         self.session.delete.assert_called_once_with(
             self.base_url,
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={
+                'Accept': 'application/json',
+                'X-Auth-Token': s.token,
+            },
+        )
         assert_that(result, none())
 
     def test_list_when_not_200(self):
@@ -55,7 +63,8 @@ class TestPersonal(RESTCommandTestCase):
         self.session.get.assert_called_once_with(
             self.base_url,
             params={'format': 'text/csv'},
-            headers={'X-Auth-Token': s.token})
+            headers={'X-Auth-Token': s.token},
+        )
         assert_that(result, equal_to(csv))
 
     def test_export_csv_when_empty(self):
@@ -80,7 +89,11 @@ class TestPersonal(RESTCommandTestCase):
             '{base_url}/{contact_id}'.format(base_url=self.base_url,
                                              contact_id=contact_id),
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={
+                'X-Auth-Token': s.token,
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_get_when_not_200(self):
@@ -98,8 +111,11 @@ class TestPersonal(RESTCommandTestCase):
             '{base_url}/import'.format(base_url=self.base_url),
             data=csv,
             params={},
-            headers={'X-Auth-Token': s.token,
-                     'Content-Type': 'text/csv; charset=cp1252'})
+            headers={
+                'X-Auth-Token': s.token,
+                'Content-Type': 'text/csv; charset=cp1252',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_import_csv_when_not_201(self):
@@ -115,10 +131,14 @@ class TestPersonal(RESTCommandTestCase):
 
         self.session.post.assert_called_once_with(
             self.base_url,
-            data=json.dumps(contact),
+            json=contact,
             params={},
-            headers={'X-Auth-Token': s.token,
-                     'Content-Type': 'application/json'})
+            headers={
+                'X-Auth-Token': s.token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_create_when_not_201(self):
@@ -136,10 +156,14 @@ class TestPersonal(RESTCommandTestCase):
         self.session.put.assert_called_once_with(
             '{base_url}/{contact_id}'.format(base_url=self.base_url,
                                              contact_id=contact_id),
-            data=json.dumps(contact),
+            json=contact,
             params={},
-            headers={'X-Auth-Token': s.token,
-                     'Content-Type': 'application/json'})
+            headers={
+                'X-Auth-Token': s.token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, equal_to({'return': 'value'}))
 
     def test_edit_when_not_200(self):
@@ -157,7 +181,11 @@ class TestPersonal(RESTCommandTestCase):
             '{base_url}/{contact_id}'.format(base_url=self.base_url,
                                              contact_id=contact_id),
             params={},
-            headers={'X-Auth-Token': s.token})
+            headers={
+                'X-Auth-Token': s.token,
+                'Accept': 'application/json',
+            },
+        )
         assert_that(result, none())
 
     def test_delete_when_not_201(self):
