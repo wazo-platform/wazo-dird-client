@@ -1,0 +1,10 @@
+- project:
+    check:
+      jobs:
+        - debian-packaging:
+            nodeset: debian9-vm
+    gate:
+      jobs:
+        - debian-packaging:
+            nodeset: debian9-vm
+
