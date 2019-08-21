@@ -17,7 +17,7 @@ backends = c.backends.list()
 
 results = c.directories.headers(term='alice', profile='default', token='my-valid-token')
 results = c.directories.lookup(term='alice', profile='default', token='my-valid-token')
-results = c.directories.lookup_user(term='alice', profile='default', xivo_user_uuid='user-uuid', token='my-valid-token')
+results = c.directories.lookup_user(term='alice', profile='default', user_uuid='user-uuid', token='my-valid-token')
 results = c.directories.reverse(exten='4185551234', profile='default', token='my-valid-token')
 
 results = c.directories.favorites(profile='default', token='my-valid-token')

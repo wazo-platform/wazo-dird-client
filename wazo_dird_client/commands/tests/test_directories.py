@@ -38,7 +38,7 @@ class TestDirectories(RESTCommandTestCase):
 
         result = self.command.lookup_user(
             profile='default',
-            xivo_user_uuid='user-uuid',
+            user_uuid='user-uuid',
             term='Alice',
             token=s.token,
         )
