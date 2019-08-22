@@ -33,6 +33,23 @@ class TestDirectories(RESTCommandTestCase):
 
         self.assertRaisesHTTPError(self.command.lookup, profile='my_profile')
 
+    def test_lookup_user(self):
+        self.session.get.return_value = self.new_response(200, json={'return': 'value'})
+
+        result = self.command.lookup_user(
+            profile='default',
+            user_uuid='user-uuid',
+            term='Alice',
+            token=s.token,
+        )
+
+        self.session.get.assert_called_once_with(
+            '{base_url}/lookup/default/user-uuid'.format(base_url=self.base_url),
+            params={'term': 'Alice'},
+            headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
+        )
+        assert_that(result, equal_to({'return': 'value'}))
+
     def test_reverse(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 

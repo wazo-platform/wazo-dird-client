@@ -18,6 +18,19 @@ class DirectoriesCommand(DirdRESTCommand):
 
         return r.json()
 
+    def lookup_user(self, profile, user_uuid, token=None, tenant_uuid=None, **kwargs):
+        url = '{base_url}/lookup/{profile}/{user_uuid}'.format(
+            base_url=self.base_url,
+            profile=profile,
+            user_uuid=user_uuid,
+        )
+        headers = self.build_ro_headers(tenant_uuid, token)
+        r = self.session.get(url, params=kwargs, headers=headers)
+        if r.status_code != 200:
+            self.raise_from_response(r)
+
+        return r.json()
+
     def reverse(self, profile, xivo_user_uuid, token=None, tenant_uuid=None, **kwargs):
         url = '{base_url}/reverse/{profile}/{xivo_user_uuid}'.format(
             base_url=self.base_url,
