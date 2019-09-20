@@ -1,10 +1,5 @@
 - project:
-    check:
-      jobs:
-        - debian-packaging:
-            nodeset: debian9-vm
-    gate:
-      jobs:
-        - debian-packaging:
-            nodeset: debian9-vm
-
+    templates:
+      - wazo-tox-py27
+      - wazo-tox-py37
+      - debian-packaging-template
