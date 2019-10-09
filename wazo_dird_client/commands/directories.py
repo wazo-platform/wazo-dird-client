@@ -2,7 +2,11 @@
 # Copyright 2014-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import logging
+
 from wazo_dird_client.commands.helpers.base_command import DirdRESTCommand
+
+logger = logging.getLogger(__name__)
 
 
 class DirectoriesCommand(DirdRESTCommand):
@@ -31,11 +35,15 @@ class DirectoriesCommand(DirdRESTCommand):
 
         return r.json()
 
-    def reverse(self, profile, xivo_user_uuid, token=None, tenant_uuid=None, **kwargs):
-        url = '{base_url}/reverse/{profile}/{xivo_user_uuid}'.format(
+    def reverse(self, profile, user_uuid=None, token=None, tenant_uuid=None, **kwargs):
+        if not user_uuid and 'xivo_user_uuid' in kwargs:
+            logger.warning('The "xivo_user_uuid" argument has been renamed to "user_uuid"')
+            user_uuid = kwargs.pop('xivo_user_uuid')
+
+        url = '{base_url}/reverse/{profile}/{user_uuid}'.format(
             base_url=self.base_url,
             profile=profile,
-            xivo_user_uuid=xivo_user_uuid,
+            user_uuid=user_uuid,
         )
         headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)

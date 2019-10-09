@@ -53,6 +53,18 @@ class TestDirectories(RESTCommandTestCase):
     def test_reverse(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
+        result = self.command.reverse(profile='default', user_uuid='abcd-1234', exten='1234', token=s.token)
+
+        self.session.get.assert_called_once_with(
+            '{base_url}/reverse/default/abcd-1234'.format(base_url=self.base_url),
+            params={'exten': '1234'},
+            headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
+        )
+        assert_that(result, equal_to({'return': 'value'}))
+
+    def test_reverse_deprecated_version(self):
+        self.session.get.return_value = self.new_response(200, json={'return': 'value'})
+
         result = self.command.reverse(profile='default', xivo_user_uuid='abcd-1234', exten='1234', token=s.token)
 
         self.session.get.assert_called_once_with(
