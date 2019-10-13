@@ -20,7 +20,7 @@ setup(
     packages=find_packages(),
 
     entry_points={
-        'dird_client.commands': [
+        'wazo_dird_client.commands': [
             'backends = wazo_dird_client.commands.backends:BackendsCommand',
             'conference_source = wazo_dird_client.commands.conference_source:Command',
             'csv_source = wazo_dird_client.commands.csv_source:Command',
