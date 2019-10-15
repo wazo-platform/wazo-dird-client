@@ -2,7 +2,7 @@
 # Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from xivo_lib_rest_client.tests.command import RESTCommandTestCase
+from wazo_lib_rest_client.tests.command import RESTCommandTestCase
 
 from hamcrest import assert_that, equal_to, none
 from mock import sentinel as s

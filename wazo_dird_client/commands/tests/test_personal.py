@@ -10,7 +10,7 @@ from hamcrest import (
 )
 from mock import sentinel as s
 
-from xivo_lib_rest_client.tests.command import RESTCommandTestCase
+from wazo_lib_rest_client.tests.command import RESTCommandTestCase
 
 from ..personal import PersonalCommand
 
