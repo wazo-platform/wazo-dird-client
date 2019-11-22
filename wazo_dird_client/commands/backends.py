@@ -51,7 +51,9 @@ class BackendsCommand(DirdRESTCommand):
 
         return r.json()
 
-    def list_contacts_from_source(self, backend, source_uuid, tenant_uuid=None, token=None, **kwargs):
+    def list_contacts_from_source(self, backend, source_uuid, tenant_uuid=None, token=None, uuids=None, **kwargs):
+        if backend == 'wazo' and uuids is not None:
+            kwargs['uuid'] = ','.join(uuid for uuid in uuids)
         url = self._build_url(backend, source_uuid, 'contacts')
         headers = self.build_ro_headers(tenant_uuid, token)
         r = self.session.get(url, headers=headers, params=kwargs)
