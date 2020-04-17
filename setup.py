@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright 2014-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2014-2020 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from setuptools import setup
@@ -27,6 +27,7 @@ setup(
             'csv_ws_source = wazo_dird_client.commands.csv_ws_source:Command',
             'directories = wazo_dird_client.commands.directories:DirectoriesCommand',
             'displays = wazo_dird_client.commands.displays:DisplaysCommand',
+            'graphql = wazo_dird_client.commands.graphql:GraphQLCommand',
             'ldap_source = wazo_dird_client.commands.ldap_source:Command',
             'personal = wazo_dird_client.commands.personal:PersonalCommand',
             'phonebook = wazo_dird_client.commands.phonebook:PhonebookCommand',
