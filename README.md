@@ -88,6 +88,9 @@ profiles = c.profiles.list(order='name', direction='asc', limit=10, offset=30, s
 
 # Deleting a profile
 c.profiles.delete(profile['uuid'])
+
+# Running GraphQL query
+c.graphql.query('{ hello }')
 ```
 
 
