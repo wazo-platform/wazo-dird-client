@@ -5,9 +5,11 @@ from .helpers.base_command import DirdRESTCommand
 
 
 class GraphQLCommand(DirdRESTCommand):
+
+    resource = 'graphql'
+
     def query(self, query, tenant_uuid, token):
         headers = self.build_rw_headers(tenant_uuid, token)
-        url = self._client.url('graphql')
-        r = self.session.post(url, json=query, headers=headers)
+        r = self.session.post(self.base_url, json=query, headers=headers)
         self.raise_from_response(r)
         return r.json()
