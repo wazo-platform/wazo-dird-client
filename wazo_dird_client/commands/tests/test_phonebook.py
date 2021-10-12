@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2016-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_lib_rest_client.tests.command import RESTCommandTestCase
@@ -39,7 +39,6 @@ class TestPhonebookContact(RESTCommandTestCase):
             headers={
                 'Accept': 'application/json',
                 'X-Auth-Token': s.token,
-                'Content-Type': 'application/json',
             },
         )
         assert_that(result, equal_to({'return': 'value'}))
@@ -134,7 +133,6 @@ class TestPhonebookContact(RESTCommandTestCase):
             params={},
             headers={
                 'X-Auth-Token': s.token,
-                'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
         )
@@ -193,7 +191,6 @@ class TestPhonebook(RESTCommandTestCase):
             params={},
             headers={
                 'X-Auth-Token': s.token,
-                'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
         )
@@ -259,7 +256,6 @@ class TestPhonebook(RESTCommandTestCase):
             params={},
             headers={
                 'X-Auth-Token': s.token,
-                'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
         )

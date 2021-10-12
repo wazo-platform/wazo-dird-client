@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2014-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2014-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import (
@@ -113,6 +113,7 @@ class TestPersonal(RESTCommandTestCase):
             params={},
             headers={
                 'X-Auth-Token': s.token,
+                'Accept': 'application/json',
                 'Content-Type': 'text/csv; charset=cp1252',
             },
         )
@@ -135,7 +136,6 @@ class TestPersonal(RESTCommandTestCase):
             params={},
             headers={
                 'X-Auth-Token': s.token,
-                'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
         )
@@ -160,7 +160,6 @@ class TestPersonal(RESTCommandTestCase):
             params={},
             headers={
                 'X-Auth-Token': s.token,
-                'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
         )

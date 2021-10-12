@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2016-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_dird_client.commands.helpers.base_command import DirdRESTCommand
@@ -11,7 +11,7 @@ class PhonebookCommand(DirdRESTCommand):
 
     def create(self, token=None, tenant=None, phonebook_body=None, tenant_uuid=None, **kwargs):
         url = self._phonebook_all_url(tenant)
-        headers = self.build_rw_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         r = self.session.post(url, json=phonebook_body, params=kwargs, headers=headers)
         if r.status_code != 201:
             self.raise_from_response(r)
@@ -28,7 +28,7 @@ class PhonebookCommand(DirdRESTCommand):
             **kwargs
     ):
         url = self._contact_all_url(tenant, phonebook_id)
-        headers = self.build_rw_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         r = self.session.post(url, json=contact_body, params=kwargs, headers=headers)
         if r.status_code != 201:
             self.raise_from_response(r)
@@ -37,7 +37,7 @@ class PhonebookCommand(DirdRESTCommand):
 
     def list(self, token=None, tenant=None, tenant_uuid=None, **kwargs):
         url = self._phonebook_all_url(tenant)
-        headers = self.build_ro_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -46,7 +46,7 @@ class PhonebookCommand(DirdRESTCommand):
 
     def list_contacts(self, token=None, tenant=None, phonebook_id=None, tenant_uuid=None, **kwargs):
         url = self._contact_all_url(tenant, phonebook_id)
-        headers = self.build_ro_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -55,7 +55,7 @@ class PhonebookCommand(DirdRESTCommand):
 
     def delete(self, token=None, tenant=None, phonebook_id=None, tenant_uuid=None, **kwargs):
         url = self._phonebook_one_url(tenant, phonebook_id)
-        headers = self.build_ro_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         r = self.session.delete(url, params=kwargs, headers=headers)
         if r.status_code != 204:
             self.raise_from_response(r)
@@ -70,7 +70,7 @@ class PhonebookCommand(DirdRESTCommand):
             **kwargs
     ):
         url = self._phonebook_one_url(tenant, phonebook_id)
-        headers = self.build_rw_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         r = self.session.put(url, json=phonebook_body, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -79,7 +79,7 @@ class PhonebookCommand(DirdRESTCommand):
 
     def get(self, token=None, tenant=None, phonebook_id=None, tenant_uuid=None, **kwargs):
         url = self._phonebook_one_url(tenant, phonebook_id)
-        headers = self.build_ro_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -96,7 +96,7 @@ class PhonebookCommand(DirdRESTCommand):
             **kwargs
     ):
         url = self._contact_one_url(tenant, phonebook_id, contact_uuid)
-        headers = self.build_ro_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -114,7 +114,7 @@ class PhonebookCommand(DirdRESTCommand):
             **kwargs
     ):
         url = self._contact_one_url(tenant, phonebook_id, contact_uuid)
-        headers = self.build_rw_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         r = self.session.put(url, json=contact_body, params=kwargs, headers=headers)
         if r.status_code != 200:
             self.raise_from_response(r)
@@ -131,7 +131,7 @@ class PhonebookCommand(DirdRESTCommand):
             **kwargs
     ):
         url = self._contact_one_url(tenant, phonebook_id, contact_uuid)
-        headers = self.build_ro_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         r = self.session.delete(url, params=kwargs, headers=headers)
         if r.status_code != 204:
             self.raise_from_response(r)
@@ -147,7 +147,7 @@ class PhonebookCommand(DirdRESTCommand):
             **kwargs
     ):
         url = self._contact_import_url(tenant, phonebook_id)
-        headers = self.build_rw_headers(tenant_uuid, token)
+        headers = self.build_headers(tenant_uuid, token)
         content_type = 'text/csv; charset={}'.format(encoding) if encoding else 'text/csv'
         headers['Content-Type'] = content_type
         r = self.session.post(url, data=csv_text, params=kwargs, headers=headers)
