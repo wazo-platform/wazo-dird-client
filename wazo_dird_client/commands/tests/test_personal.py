@@ -86,8 +86,9 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.get(contact_id, token=s.token)
 
         self.session.get.assert_called_once_with(
-            '{base_url}/{contact_id}'.format(base_url=self.base_url,
-                                             contact_id=contact_id),
+            '{base_url}/{contact_id}'.format(
+                base_url=self.base_url, contact_id=contact_id
+            ),
             params={},
             headers={
                 'X-Auth-Token': s.token,
@@ -102,7 +103,9 @@ class TestPersonal(RESTCommandTestCase):
         self.assertRaisesHTTPError(self.command.get, 'my_contact_id', s.token)
 
     def test_import_csv(self):
-        self.session.post.return_value = self.new_response(201, json={'return': 'value'})
+        self.session.post.return_value = self.new_response(
+            201, json={'return': 'value'}
+        )
         csv = 'firstname,lastname\ndaniel,martini'
 
         result = self.command.import_csv(csv, encoding='cp1252', token=s.token)
@@ -122,10 +125,14 @@ class TestPersonal(RESTCommandTestCase):
     def test_import_csv_when_not_201(self):
         self.session.post.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.import_csv, 'firstname,lastname\ndaniel,martini')
+        self.assertRaisesHTTPError(
+            self.command.import_csv, 'firstname,lastname\ndaniel,martini'
+        )
 
     def test_create(self):
-        self.session.post.return_value = self.new_response(201, json={'return': 'value'})
+        self.session.post.return_value = self.new_response(
+            201, json={'return': 'value'}
+        )
         contact = {'firstname': 'Alice'}
 
         result = self.command.create(contact, token=s.token)
@@ -154,8 +161,9 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.edit(contact_id, contact, token=s.token)
 
         self.session.put.assert_called_once_with(
-            '{base_url}/{contact_id}'.format(base_url=self.base_url,
-                                             contact_id=contact_id),
+            '{base_url}/{contact_id}'.format(
+                base_url=self.base_url, contact_id=contact_id
+            ),
             json=contact,
             params={},
             headers={
@@ -170,7 +178,9 @@ class TestPersonal(RESTCommandTestCase):
 
         self.assertRaisesHTTPError(
             self.command.edit,
-            'my_contact_id', {'firstname': 'Alice'}, s.token,
+            'my_contact_id',
+            {'firstname': 'Alice'},
+            s.token,
         )
 
     def test_delete(self):
@@ -180,8 +190,9 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.delete(contact_id, token=s.token)
 
         self.session.delete.assert_called_once_with(
-            '{base_url}/{contact_id}'.format(base_url=self.base_url,
-                                             contact_id=contact_id),
+            '{base_url}/{contact_id}'.format(
+                base_url=self.base_url, contact_id=contact_id
+            ),
             params={},
             headers={
                 'X-Auth-Token': s.token,

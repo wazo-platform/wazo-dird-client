@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2014-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2014-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that
@@ -53,7 +53,9 @@ class TestDirectories(RESTCommandTestCase):
     def test_reverse(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
-        result = self.command.reverse(profile='default', user_uuid='abcd-1234', exten='1234', token=s.token)
+        result = self.command.reverse(
+            profile='default', user_uuid='abcd-1234', exten='1234', token=s.token
+        )
 
         self.session.get.assert_called_once_with(
             '{base_url}/reverse/default/abcd-1234'.format(base_url=self.base_url),
@@ -65,7 +67,9 @@ class TestDirectories(RESTCommandTestCase):
     def test_reverse_deprecated_version(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
-        result = self.command.reverse(profile='default', xivo_user_uuid='abcd-1234', exten='1234', token=s.token)
+        result = self.command.reverse(
+            profile='default', xivo_user_uuid='abcd-1234', exten='1234', token=s.token
+        )
 
         self.session.get.assert_called_once_with(
             '{base_url}/reverse/default/abcd-1234'.format(base_url=self.base_url),
@@ -77,7 +81,9 @@ class TestDirectories(RESTCommandTestCase):
     def test_reverse_when_not_200(self):
         self.session.get.return_value = self.new_response(404)
 
-        self.assertRaisesHTTPError(self.command.reverse, profile='my_profile', xivo_user_uuid='abcd-1234')
+        self.assertRaisesHTTPError(
+            self.command.reverse, profile='my_profile', xivo_user_uuid='abcd-1234'
+        )
 
     def test_headers(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
@@ -119,7 +125,9 @@ class TestDirectories(RESTCommandTestCase):
         result = self.command.new_favorite('my_directory', 'my_contact', token=s.token)
 
         self.session.put.assert_called_once_with(
-            '{base_url}/favorites/my_directory/my_contact'.format(base_url=self.base_url),
+            '{base_url}/favorites/my_directory/my_contact'.format(
+                base_url=self.base_url
+            ),
             params={},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )
@@ -128,15 +136,21 @@ class TestDirectories(RESTCommandTestCase):
     def test_new_favorite_when_not_204(self):
         self.session.put.return_value = self.new_response(404)
 
-        self.assertRaisesHTTPError(self.command.new_favorite, 'my_directory', 'my_contact')
+        self.assertRaisesHTTPError(
+            self.command.new_favorite, 'my_directory', 'my_contact'
+        )
 
     def test_remove_favorite(self):
         self.session.delete.return_value = self.new_response(204)
 
-        result = self.command.remove_favorite('my_directory', 'my_contact', token=s.token)
+        result = self.command.remove_favorite(
+            'my_directory', 'my_contact', token=s.token
+        )
 
         self.session.delete.assert_called_once_with(
-            '{base_url}/favorites/my_directory/my_contact'.format(base_url=self.base_url),
+            '{base_url}/favorites/my_directory/my_contact'.format(
+                base_url=self.base_url
+            ),
             params={},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )
@@ -145,7 +159,9 @@ class TestDirectories(RESTCommandTestCase):
     def test_remove_favorite_when_not_204(self):
         self.session.delete.return_value = self.new_response(404)
 
-        self.assertRaisesHTTPError(self.command.remove_favorite, 'my_directory', 'my_contact')
+        self.assertRaisesHTTPError(
+            self.command.remove_favorite, 'my_directory', 'my_contact'
+        )
 
     def test_personal(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})

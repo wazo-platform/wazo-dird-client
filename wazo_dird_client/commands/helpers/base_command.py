@@ -6,7 +6,6 @@ from wazo_lib_rest_client import RESTCommand
 
 
 class DirdRESTCommand(RESTCommand):
-
     def build_headers(self, tenant_uuid=None, token=None):
         headers = self._get_headers(tenant_uuid=tenant_uuid)
         return self._build_headers(headers, token)

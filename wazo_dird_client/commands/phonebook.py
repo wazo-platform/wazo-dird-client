@@ -9,7 +9,9 @@ class PhonebookCommand(DirdRESTCommand):
 
     resource = 'tenants'
 
-    def create(self, token=None, tenant=None, phonebook_body=None, tenant_uuid=None, **kwargs):
+    def create(
+        self, token=None, tenant=None, phonebook_body=None, tenant_uuid=None, **kwargs
+    ):
         url = self._phonebook_all_url(tenant)
         headers = self.build_headers(tenant_uuid, token)
         r = self.session.post(url, json=phonebook_body, params=kwargs, headers=headers)
@@ -19,13 +21,13 @@ class PhonebookCommand(DirdRESTCommand):
         return r.json()
 
     def create_contact(
-            self,
-            token=None,
-            tenant=None,
-            phonebook_id=None,
-            contact_body=None,
-            tenant_uuid=None,
-            **kwargs
+        self,
+        token=None,
+        tenant=None,
+        phonebook_id=None,
+        contact_body=None,
+        tenant_uuid=None,
+        **kwargs
     ):
         url = self._contact_all_url(tenant, phonebook_id)
         headers = self.build_headers(tenant_uuid, token)
@@ -44,7 +46,9 @@ class PhonebookCommand(DirdRESTCommand):
 
         return r.json()
 
-    def list_contacts(self, token=None, tenant=None, phonebook_id=None, tenant_uuid=None, **kwargs):
+    def list_contacts(
+        self, token=None, tenant=None, phonebook_id=None, tenant_uuid=None, **kwargs
+    ):
         url = self._contact_all_url(tenant, phonebook_id)
         headers = self.build_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
@@ -53,7 +57,9 @@ class PhonebookCommand(DirdRESTCommand):
 
         return r.json()
 
-    def delete(self, token=None, tenant=None, phonebook_id=None, tenant_uuid=None, **kwargs):
+    def delete(
+        self, token=None, tenant=None, phonebook_id=None, tenant_uuid=None, **kwargs
+    ):
         url = self._phonebook_one_url(tenant, phonebook_id)
         headers = self.build_headers(tenant_uuid, token)
         r = self.session.delete(url, params=kwargs, headers=headers)
@@ -61,13 +67,13 @@ class PhonebookCommand(DirdRESTCommand):
             self.raise_from_response(r)
 
     def edit(
-            self,
-            token=None,
-            tenant=None,
-            phonebook_id=None,
-            phonebook_body=None,
-            tenant_uuid=None,
-            **kwargs
+        self,
+        token=None,
+        tenant=None,
+        phonebook_id=None,
+        phonebook_body=None,
+        tenant_uuid=None,
+        **kwargs
     ):
         url = self._phonebook_one_url(tenant, phonebook_id)
         headers = self.build_headers(tenant_uuid, token)
@@ -77,7 +83,9 @@ class PhonebookCommand(DirdRESTCommand):
 
         return r.json()
 
-    def get(self, token=None, tenant=None, phonebook_id=None, tenant_uuid=None, **kwargs):
+    def get(
+        self, token=None, tenant=None, phonebook_id=None, tenant_uuid=None, **kwargs
+    ):
         url = self._phonebook_one_url(tenant, phonebook_id)
         headers = self.build_headers(tenant_uuid, token)
         r = self.session.get(url, params=kwargs, headers=headers)
@@ -87,13 +95,13 @@ class PhonebookCommand(DirdRESTCommand):
         return r.json()
 
     def get_contact(
-            self,
-            token=None,
-            tenant=None,
-            phonebook_id=None,
-            contact_uuid=None,
-            tenant_uuid=None,
-            **kwargs
+        self,
+        token=None,
+        tenant=None,
+        phonebook_id=None,
+        contact_uuid=None,
+        tenant_uuid=None,
+        **kwargs
     ):
         url = self._contact_one_url(tenant, phonebook_id, contact_uuid)
         headers = self.build_headers(tenant_uuid, token)
@@ -104,14 +112,14 @@ class PhonebookCommand(DirdRESTCommand):
         return r.json()
 
     def edit_contact(
-            self,
-            token=None,
-            tenant=None,
-            phonebook_id=None,
-            contact_uuid=None,
-            contact_body=None,
-            tenant_uuid=None,
-            **kwargs
+        self,
+        token=None,
+        tenant=None,
+        phonebook_id=None,
+        contact_uuid=None,
+        contact_body=None,
+        tenant_uuid=None,
+        **kwargs
     ):
         url = self._contact_one_url(tenant, phonebook_id, contact_uuid)
         headers = self.build_headers(tenant_uuid, token)
@@ -122,13 +130,13 @@ class PhonebookCommand(DirdRESTCommand):
         return r.json()
 
     def delete_contact(
-            self,
-            token=None,
-            tenant=None,
-            phonebook_id=None,
-            contact_uuid=None,
-            tenant_uuid=None,
-            **kwargs
+        self,
+        token=None,
+        tenant=None,
+        phonebook_id=None,
+        contact_uuid=None,
+        tenant_uuid=None,
+        **kwargs
     ):
         url = self._contact_one_url(tenant, phonebook_id, contact_uuid)
         headers = self.build_headers(tenant_uuid, token)
@@ -137,18 +145,20 @@ class PhonebookCommand(DirdRESTCommand):
             self.raise_from_response(r)
 
     def import_csv(
-            self,
-            tenant=None,
-            phonebook_id=None,
-            csv_text=None,
-            encoding=None,
-            token=None,
-            tenant_uuid=None,
-            **kwargs
+        self,
+        tenant=None,
+        phonebook_id=None,
+        csv_text=None,
+        encoding=None,
+        token=None,
+        tenant_uuid=None,
+        **kwargs
     ):
         url = self._contact_import_url(tenant, phonebook_id)
         headers = self.build_headers(tenant_uuid, token)
-        content_type = 'text/csv; charset={}'.format(encoding) if encoding else 'text/csv'
+        content_type = (
+            'text/csv; charset={}'.format(encoding) if encoding else 'text/csv'
+        )
         headers['Content-Type'] = content_type
         r = self.session.post(url, data=csv_text, params=kwargs, headers=headers)
         if r.status_code != 200:
@@ -166,8 +176,9 @@ class PhonebookCommand(DirdRESTCommand):
         return '{}/import'.format(self._contact_all_url(tenant, phonebook_id))
 
     def _phonebook_all_url(self, tenant):
-        return '{base_url}/{tenant}/phonebooks'.format(base_url=self.base_url,
-                                                       tenant=tenant)
+        return '{base_url}/{tenant}/phonebooks'.format(
+            base_url=self.base_url, tenant=tenant
+        )
 
     def _phonebook_one_url(self, tenant, phonebook_id):
         return '{}/{}'.format(self._phonebook_all_url(tenant), phonebook_id)

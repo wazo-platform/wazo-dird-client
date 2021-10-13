@@ -6,7 +6,6 @@ from wazo_dird_client.commands.helpers.base_command import DirdRESTCommand
 
 
 class SourceCommand(DirdRESTCommand):
-
     def create(self, body, tenant_uuid=None, token=None):
         headers = self.build_headers(tenant_uuid, token)
         r = self.session.post(self.base_url, json=body, headers=headers)
