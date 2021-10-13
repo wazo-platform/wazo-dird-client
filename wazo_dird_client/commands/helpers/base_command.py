@@ -1,27 +1,20 @@
 # -*- coding: utf-8 -*-
-# Copyright 2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_lib_rest_client import RESTCommand
 
 
 class DirdRESTCommand(RESTCommand):
+    def build_headers(self, tenant_uuid=None, token=None):
+        headers = self._get_headers(tenant_uuid=tenant_uuid)
+        return self._build_headers(headers, token)
 
-    _rw_headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
-    _ro_headers = {'Accept': 'application/json'}
+    # Keep only for compatibility with external plugins
+    build_rw_headers = build_headers
+    build_ro_headers = build_headers
 
-    def build_ro_headers(self, tenant_uuid, token):
-        return self._build_headers(dict(self._ro_headers), tenant_uuid, token)
-
-    def build_rw_headers(self, tenant_uuid, token):
-        return self._build_headers(dict(self._rw_headers), tenant_uuid, token)
-
-    def _build_headers(self, headers, tenant_uuid, token):
+    def _build_headers(self, headers, token):
         if token:
             headers['X-Auth-Token'] = token
-
-        tenant_uuid = tenant_uuid or self._client.tenant()
-        if tenant_uuid:
-            headers['Wazo-Tenant'] = tenant_uuid
-
         return headers

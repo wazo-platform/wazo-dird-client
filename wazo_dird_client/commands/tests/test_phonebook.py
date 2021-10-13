@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016-2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2016-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_lib_rest_client.tests.command import RESTCommandTestCase
@@ -20,12 +20,17 @@ class TestPhonebookContact(RESTCommandTestCase):
         self.phonebook_id = 42
 
     def test_create(self):
-        self.session.post.return_value = self.new_response(201, json={'return': 'value'})
+        self.session.post.return_value = self.new_response(
+            201, json={'return': 'value'}
+        )
         contact_body = {'firstname': 'Foo', 'lastname': 'Bar'}
 
-        result = self.command.create_contact(tenant=self.tenant,
-                                             phonebook_id=self.phonebook_id,
-                                             token=s.token, contact_body=contact_body)
+        result = self.command.create_contact(
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+            token=s.token,
+            contact_body=contact_body,
+        )
 
         url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(
             base_url=self.base_url,
@@ -39,7 +44,6 @@ class TestPhonebookContact(RESTCommandTestCase):
             headers={
                 'Accept': 'application/json',
                 'X-Auth-Token': s.token,
-                'Content-Type': 'application/json',
             },
         )
         assert_that(result, equal_to({'return': 'value'}))
@@ -47,17 +51,16 @@ class TestPhonebookContact(RESTCommandTestCase):
     def test_create_when_not_201(self):
         self.session.post.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.create,
-                                   phonebook_body={},
-                                   tenant=self.tenant,
-                                   token=s.token)
+        self.assertRaisesHTTPError(
+            self.command.create, phonebook_body={}, tenant=self.tenant, token=s.token
+        )
 
     def test_list(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
-        result = self.command.list_contacts(tenant=self.tenant,
-                                            token=s.token,
-                                            phonebook_id=self.phonebook_id)
+        result = self.command.list_contacts(
+            tenant=self.tenant, token=s.token, phonebook_id=self.phonebook_id
+        )
 
         url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(
             base_url=self.base_url,
@@ -77,22 +80,30 @@ class TestPhonebookContact(RESTCommandTestCase):
     def test_list_when_not_200(self):
         self.session.get.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.list_contacts, token=s.token,
-                                   tenant=self.tenant, phonebook_id=self.phonebook_id)
+        self.assertRaisesHTTPError(
+            self.command.list_contacts,
+            token=s.token,
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+        )
 
     def test_get(self):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
-        result = self.command.get_contact(token=s.token,
-                                          tenant=self.tenant,
-                                          phonebook_id=self.phonebook_id,
-                                          contact_uuid=s.contact_uuid)
+        result = self.command.get_contact(
+            token=s.token,
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+            contact_uuid=s.contact_uuid,
+        )
 
         url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts/{contact_uuid}'
-        url = url.format(base_url=self.base_url,
-                         tenant=self.tenant,
-                         phonebook_id=self.phonebook_id,
-                         contact_uuid=s.contact_uuid)
+        url = url.format(
+            base_url=self.base_url,
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+            contact_uuid=s.contact_uuid,
+        )
         self.session.get.assert_called_once_with(
             url,
             params={},
@@ -106,27 +117,33 @@ class TestPhonebookContact(RESTCommandTestCase):
     def test_get_when_not_200(self):
         self.session.get.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.get_contact,
-                                   token=s.token,
-                                   tenant=self.tenant,
-                                   phonebook_id=self.phonebook_id,
-                                   contact_uuid=s.contact_uuid)
+        self.assertRaisesHTTPError(
+            self.command.get_contact,
+            token=s.token,
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+            contact_uuid=s.contact_uuid,
+        )
 
     def test_edit(self):
         self.session.put.return_value = self.new_response(200, json={'return': 'value'})
         body = {'firstname': 'test'}
 
-        result = self.command.edit_contact(tenant=self.tenant,
-                                           phonebook_id=self.phonebook_id,
-                                           contact_uuid=s.contact_uuid,
-                                           contact_body=body,
-                                           token=s.token)
+        result = self.command.edit_contact(
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+            contact_uuid=s.contact_uuid,
+            contact_body=body,
+            token=s.token,
+        )
 
         url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts/{contact_uuid}'
-        url = url.format(base_url=self.base_url,
-                         tenant=self.tenant,
-                         phonebook_id=self.phonebook_id,
-                         contact_uuid=s.contact_uuid)
+        url = url.format(
+            base_url=self.base_url,
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+            contact_uuid=s.contact_uuid,
+        )
 
         self.session.put.assert_called_once_with(
             url,
@@ -134,7 +151,6 @@ class TestPhonebookContact(RESTCommandTestCase):
             params={},
             headers={
                 'X-Auth-Token': s.token,
-                'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
         )
@@ -148,16 +164,20 @@ class TestPhonebookContact(RESTCommandTestCase):
     def test_delete(self):
         self.session.delete.return_value = self.new_response(204)
 
-        result = self.command.delete_contact(tenant=self.tenant,
-                                             phonebook_id=self.phonebook_id,
-                                             contact_uuid=s.contact_uuid,
-                                             token=s.token)
+        result = self.command.delete_contact(
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+            contact_uuid=s.contact_uuid,
+            token=s.token,
+        )
 
         url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts/{contact_uuid}'
-        url = url.format(base_url=self.base_url,
-                         tenant=self.tenant,
-                         phonebook_id=self.phonebook_id,
-                         contact_uuid=s.contact_uuid)
+        url = url.format(
+            base_url=self.base_url,
+            tenant=self.tenant,
+            phonebook_id=self.phonebook_id,
+            contact_uuid=s.contact_uuid,
+        )
         self.session.delete.assert_called_once_with(
             url,
             params={},
@@ -171,8 +191,12 @@ class TestPhonebookContact(RESTCommandTestCase):
     def test_delete_when_not_204(self):
         self.session.delete.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.delete, token=s.token, tenant=s.tenant,
-                                   phonebook_id=s.phonebook_id)
+        self.assertRaisesHTTPError(
+            self.command.delete,
+            token=s.token,
+            tenant=s.tenant,
+            phonebook_id=s.phonebook_id,
+        )
 
 
 class TestPhonebook(RESTCommandTestCase):
@@ -180,11 +204,15 @@ class TestPhonebook(RESTCommandTestCase):
     Command = PhonebookCommand
 
     def test_create(self):
-        self.session.post.return_value = self.new_response(201, json={'return': 'value'})
+        self.session.post.return_value = self.new_response(
+            201, json={'return': 'value'}
+        )
         phonebook_body = {'name': 'main', 'description': 'The main phonebook'}
         tenant = 'mytenant'
 
-        result = self.command.create(tenant=tenant, token=s.token, phonebook_body=phonebook_body)
+        result = self.command.create(
+            tenant=tenant, token=s.token, phonebook_body=phonebook_body
+        )
 
         url = '{base_url}/mytenant/phonebooks'.format(base_url=self.base_url)
         self.session.post.assert_called_once_with(
@@ -193,7 +221,6 @@ class TestPhonebook(RESTCommandTestCase):
             params={},
             headers={
                 'X-Auth-Token': s.token,
-                'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
         )
@@ -202,8 +229,12 @@ class TestPhonebook(RESTCommandTestCase):
     def test_create_when_not_201(self):
         self.session.post.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.create, phonebook_body={'name': 'main'},
-                                   tenant='thetenant', token=s.token)
+        self.assertRaisesHTTPError(
+            self.command.create,
+            phonebook_body={'name': 'main'},
+            tenant='thetenant',
+            token=s.token,
+        )
 
     def test_list_phonebook(self):
         tenant = 'mytenant'
@@ -225,11 +256,13 @@ class TestPhonebook(RESTCommandTestCase):
 
         tenant, phonebook_id = 'atenant', 42
 
-        result = self.command.get(token=s.token, tenant=tenant, phonebook_id=phonebook_id)
+        result = self.command.get(
+            token=s.token, tenant=tenant, phonebook_id=phonebook_id
+        )
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(base_url=self.base_url,
-                                                                     tenant=tenant,
-                                                                     phonebook_id=phonebook_id)
+        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(
+            base_url=self.base_url, tenant=tenant, phonebook_id=phonebook_id
+        )
         self._assert_get(url, s.token)
         assert_that(result, equal_to({'return': 'value'}))
 
@@ -238,7 +271,9 @@ class TestPhonebook(RESTCommandTestCase):
 
         self.assertRaisesHTTPError(
             self.command.get,
-            token=s.token, tenant='mytenant', phonebook_id=42,
+            token=s.token,
+            tenant='mytenant',
+            phonebook_id=42,
         )
 
     def test_edit(self):
@@ -247,19 +282,19 @@ class TestPhonebook(RESTCommandTestCase):
         phonebook_id = 'my_contact_id'
         body = {'name': 'test'}
 
-        result = self.command.edit(tenant=tenant, phonebook_id=phonebook_id,
-                                   phonebook_body=body, token=s.token)
+        result = self.command.edit(
+            tenant=tenant, phonebook_id=phonebook_id, phonebook_body=body, token=s.token
+        )
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(base_url=self.base_url,
-                                                                     tenant=tenant,
-                                                                     phonebook_id=phonebook_id)
+        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(
+            base_url=self.base_url, tenant=tenant, phonebook_id=phonebook_id
+        )
         self.session.put.assert_called_once_with(
             url,
             json=body,
             params={},
             headers={
                 'X-Auth-Token': s.token,
-                'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
         )
@@ -270,14 +305,18 @@ class TestPhonebook(RESTCommandTestCase):
 
         self.assertRaisesHTTPError(
             self.command.edit,
-            tenant=s.tenant, phonebook_body={}, token=s.token,
+            tenant=s.tenant,
+            phonebook_body={},
+            token=s.token,
         )
 
     def test_delete(self):
         self.session.delete.return_value = self.new_response(204)
         phonebook_id, tenant = 'my_phonebook_id', 'zetenant'
 
-        result = self.command.delete(tenant=tenant, phonebook_id=phonebook_id, token=s.token)
+        result = self.command.delete(
+            tenant=tenant, phonebook_id=phonebook_id, token=s.token
+        )
 
         url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(
             base_url=self.base_url,
@@ -297,8 +336,12 @@ class TestPhonebook(RESTCommandTestCase):
     def test_delete_when_not_204(self):
         self.session.delete.return_value = self.new_response(401)
 
-        self.assertRaisesHTTPError(self.command.delete, token=s.token, tenant=s.tenant,
-                                   phonebook_id=s.phonebook_id)
+        self.assertRaisesHTTPError(
+            self.command.delete,
+            token=s.token,
+            tenant=s.tenant,
+            phonebook_id=s.phonebook_id,
+        )
 
     def _assert_get(self, url, token):
         self.session.get.assert_called_once_with(

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2019 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2021 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -17,9 +17,7 @@ class TestBackends(RESTCommandTestCase):
         self.session.get.return_value = self.new_response(200, json={'return': 'value'})
 
         result = self.command.list_contacts_from_source(
-            backend='wazo',
-            source_uuid='source-uuid',
-            uuids=['uuid1', 'uuid2']
+            backend='wazo', source_uuid='source-uuid', uuids=['uuid1', 'uuid2']
         )
 
         self.session.get.assert_called_once_with(
