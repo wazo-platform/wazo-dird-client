@@ -32,3 +32,7 @@ class DirdError(HTTPError):
 
 class InvalidDirdError(Exception):
     pass
+
+
+class DirdServiceUnavailable(DirdError):
+    pass
