@@ -8,8 +8,8 @@ class StatusCommand(DirdRESTCommand):
 
     resource = 'status'
 
-    def get(self):
-        headers = self.build_headers()
+    def get(self, tenant_uuid=None):
+        headers = self.build_headers(tenant_uuid=tenant_uuid)
         r = self.session.get(self.base_url, headers=headers)
         self.raise_from_response(r)
         return r.json()
