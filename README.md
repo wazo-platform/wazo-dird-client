@@ -119,6 +119,26 @@ c = Client(...)
 c.foo.bar()  # bar is a method of the FooCommand class
 ```
 
+
+How to access `config` endpoint on `wazo-dird` using `config` command
+---------------------------------------------------------------------
+
+One can access the configuration of `wazo-dird` (`config` plugin) by using the following:
+
+```python
+
+from wazo_dird_client import Client as DirdClient
+
+dird_client = DirdClient('127.0.0.1', port=9489, token='valid-master-token')
+config = dird_client.config.get(tenant_uuid='valid-master-tenant-uuid')
+
+```
+
+##Note:
+
+Notice that the `config` endpoint is restricted to be accessible only by the `master` tenant; otherwise, an HTTP 401 error (`DirdError`) will be thrown.
+
+
 Running unit tests
 ------------------
 
