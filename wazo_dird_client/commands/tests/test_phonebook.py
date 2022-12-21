@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-# Copyright 2016-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2016-2022 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_lib_rest_client.tests.command import RESTCommandTestCase
 
 from hamcrest import assert_that, equal_to, none
-from mock import sentinel as s
+from unittest.mock import sentinel as s
 
 from ..phonebook import PhonebookCommand
 
@@ -15,7 +14,7 @@ class TestPhonebookContact(RESTCommandTestCase):
     Command = PhonebookCommand
 
     def setUp(self):
-        super(TestPhonebookContact, self).setUp()
+        super().setUp()
         self.tenant = 'atenant'
         self.phonebook_id = 42
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2022 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -25,8 +24,8 @@ class DirdError(HTTPError):
         except KeyError:
             raise InvalidDirdError()
 
-        exception_message = '{e.message}: {e.details}'.format(e=self)
-        super(DirdError, self).__init__(exception_message, response=response)
+        exception_message = f'{self.message}: {self.details}'
+        super().__init__(exception_message, response=response)
 
 
 class InvalidDirdError(Exception):

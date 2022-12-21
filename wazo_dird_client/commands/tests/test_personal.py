@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2014-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2014-2022 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import (
@@ -8,7 +7,7 @@ from hamcrest import (
     is_,
     none,
 )
-from mock import sentinel as s
+from unittest.mock import sentinel as s
 
 from wazo_lib_rest_client.tests.command import RESTCommandTestCase
 
