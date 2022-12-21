@@ -31,11 +31,7 @@ class TestPhonebookContact(RESTCommandTestCase):
             contact_body=contact_body,
         )
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(
-            base_url=self.base_url,
-            tenant=self.tenant,
-            phonebook_id=self.phonebook_id,
-        )
+        url = f'{self.base_url}/{self.tenant}/phonebooks/{self.phonebook_id}/contacts'
         self.session.post.assert_called_once_with(
             url,
             json=contact_body,
@@ -61,11 +57,7 @@ class TestPhonebookContact(RESTCommandTestCase):
             tenant=self.tenant, token=s.token, phonebook_id=self.phonebook_id
         )
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts'.format(
-            base_url=self.base_url,
-            tenant=self.tenant,
-            phonebook_id=self.phonebook_id,
-        )
+        url = f'{self.base_url}/{self.tenant}/phonebooks/{self.phonebook_id}/contacts'
         self.session.get.assert_called_once_with(
             url,
             params={},
@@ -96,13 +88,7 @@ class TestPhonebookContact(RESTCommandTestCase):
             contact_uuid=s.contact_uuid,
         )
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts/{contact_uuid}'
-        url = url.format(
-            base_url=self.base_url,
-            tenant=self.tenant,
-            phonebook_id=self.phonebook_id,
-            contact_uuid=s.contact_uuid,
-        )
+        url = f'{self.base_url}/{self.tenant}/phonebooks/{self.phonebook_id}/contacts/{s.contact_uuid}'
         self.session.get.assert_called_once_with(
             url,
             params={},
@@ -136,13 +122,7 @@ class TestPhonebookContact(RESTCommandTestCase):
             token=s.token,
         )
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts/{contact_uuid}'
-        url = url.format(
-            base_url=self.base_url,
-            tenant=self.tenant,
-            phonebook_id=self.phonebook_id,
-            contact_uuid=s.contact_uuid,
-        )
+        url = f'{self.base_url}/{self.tenant}/phonebooks/{self.phonebook_id}/contacts/{s.contact_uuid}'
 
         self.session.put.assert_called_once_with(
             url,
@@ -170,13 +150,7 @@ class TestPhonebookContact(RESTCommandTestCase):
             token=s.token,
         )
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}/contacts/{contact_uuid}'
-        url = url.format(
-            base_url=self.base_url,
-            tenant=self.tenant,
-            phonebook_id=self.phonebook_id,
-            contact_uuid=s.contact_uuid,
-        )
+        url = f'{self.base_url}/{self.tenant}/phonebooks/{self.phonebook_id}/contacts/{s.contact_uuid}'
         self.session.delete.assert_called_once_with(
             url,
             params={},
@@ -213,7 +187,7 @@ class TestPhonebook(RESTCommandTestCase):
             tenant=tenant, token=s.token, phonebook_body=phonebook_body
         )
 
-        url = '{base_url}/mytenant/phonebooks'.format(base_url=self.base_url)
+        url = f'{self.base_url}/mytenant/phonebooks'
         self.session.post.assert_called_once_with(
             url,
             json=phonebook_body,
@@ -241,7 +215,7 @@ class TestPhonebook(RESTCommandTestCase):
 
         result = self.command.list(tenant=tenant, token=s.token)
 
-        url = '{base_url}/mytenant/phonebooks'.format(base_url=self.base_url)
+        url = f'{self.base_url}/mytenant/phonebooks'
         self._assert_get(url=url, token=s.token)
         assert_that(result, equal_to({'return': 'value'}))
 
@@ -259,9 +233,7 @@ class TestPhonebook(RESTCommandTestCase):
             token=s.token, tenant=tenant, phonebook_id=phonebook_id
         )
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(
-            base_url=self.base_url, tenant=tenant, phonebook_id=phonebook_id
-        )
+        url = f'{self.base_url}/{tenant}/phonebooks/{phonebook_id}'
         self._assert_get(url, s.token)
         assert_that(result, equal_to({'return': 'value'}))
 
@@ -285,9 +257,7 @@ class TestPhonebook(RESTCommandTestCase):
             tenant=tenant, phonebook_id=phonebook_id, phonebook_body=body, token=s.token
         )
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(
-            base_url=self.base_url, tenant=tenant, phonebook_id=phonebook_id
-        )
+        url = f'{self.base_url}/{tenant}/phonebooks/{phonebook_id}'
         self.session.put.assert_called_once_with(
             url,
             json=body,
@@ -317,11 +287,7 @@ class TestPhonebook(RESTCommandTestCase):
             tenant=tenant, phonebook_id=phonebook_id, token=s.token
         )
 
-        url = '{base_url}/{tenant}/phonebooks/{phonebook_id}'.format(
-            base_url=self.base_url,
-            tenant=tenant,
-            phonebook_id=phonebook_id,
-        )
+        url = f'{self.base_url}/{tenant}/phonebooks/{phonebook_id}'
         self.session.delete.assert_called_once_with(
             url,
             params={},

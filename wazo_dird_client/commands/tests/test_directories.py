@@ -19,7 +19,7 @@ class TestDirectories(RESTCommandTestCase):
         result = self.command.lookup(profile='default', term='Alice', token=s.token)
 
         self.session.get.assert_called_once_with(
-            '{base_url}/lookup/default'.format(base_url=self.base_url),
+            f'{self.base_url}/lookup/default',
             params={'term': 'Alice'},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )
@@ -41,7 +41,7 @@ class TestDirectories(RESTCommandTestCase):
         )
 
         self.session.get.assert_called_once_with(
-            '{base_url}/lookup/default/user-uuid'.format(base_url=self.base_url),
+            f'{self.base_url}/lookup/default/user-uuid',
             params={'term': 'Alice'},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )
@@ -55,7 +55,7 @@ class TestDirectories(RESTCommandTestCase):
         )
 
         self.session.get.assert_called_once_with(
-            '{base_url}/reverse/default/abcd-1234'.format(base_url=self.base_url),
+            f'{self.base_url}/reverse/default/abcd-1234',
             params={'exten': '1234'},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )
@@ -69,7 +69,7 @@ class TestDirectories(RESTCommandTestCase):
         )
 
         self.session.get.assert_called_once_with(
-            '{base_url}/reverse/default/abcd-1234'.format(base_url=self.base_url),
+            f'{self.base_url}/reverse/default/abcd-1234',
             params={'exten': '1234'},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )
@@ -88,7 +88,7 @@ class TestDirectories(RESTCommandTestCase):
         result = self.command.headers(profile='default', token=s.token)
 
         self.session.get.assert_called_once_with(
-            '{base_url}/lookup/default/headers'.format(base_url=self.base_url),
+            f'{self.base_url}/lookup/default/headers',
             params={},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )
@@ -105,7 +105,7 @@ class TestDirectories(RESTCommandTestCase):
         result = self.command.favorites(profile='default', token=s.token)
 
         self.session.get.assert_called_once_with(
-            '{base_url}/favorites/default'.format(base_url=self.base_url),
+            f'{self.base_url}/favorites/default',
             params={},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )
@@ -122,9 +122,7 @@ class TestDirectories(RESTCommandTestCase):
         result = self.command.new_favorite('my_directory', 'my_contact', token=s.token)
 
         self.session.put.assert_called_once_with(
-            '{base_url}/favorites/my_directory/my_contact'.format(
-                base_url=self.base_url
-            ),
+            f'{self.base_url}/favorites/my_directory/my_contact',
             params={},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )
@@ -145,9 +143,7 @@ class TestDirectories(RESTCommandTestCase):
         )
 
         self.session.delete.assert_called_once_with(
-            '{base_url}/favorites/my_directory/my_contact'.format(
-                base_url=self.base_url
-            ),
+            f'{self.base_url}/favorites/my_directory/my_contact',
             params={},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )
@@ -166,7 +162,7 @@ class TestDirectories(RESTCommandTestCase):
         result = self.command.personal(profile='default', token=s.token)
 
         self.session.get.assert_called_once_with(
-            '{base_url}/personal/default'.format(base_url=self.base_url),
+            f'{self.base_url}/personal/default',
             params={},
             headers={'X-Auth-Token': s.token, 'Accept': 'application/json'},
         )

@@ -85,9 +85,7 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.get(contact_id, token=s.token)
 
         self.session.get.assert_called_once_with(
-            '{base_url}/{contact_id}'.format(
-                base_url=self.base_url, contact_id=contact_id
-            ),
+            f'{self.base_url}/{contact_id}',
             params={},
             headers={
                 'X-Auth-Token': s.token,
@@ -110,7 +108,7 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.import_csv(csv, encoding='cp1252', token=s.token)
 
         self.session.post.assert_called_once_with(
-            '{base_url}/import'.format(base_url=self.base_url),
+            f'{self.base_url}/import',
             data=csv,
             params={},
             headers={
@@ -160,9 +158,7 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.edit(contact_id, contact, token=s.token)
 
         self.session.put.assert_called_once_with(
-            '{base_url}/{contact_id}'.format(
-                base_url=self.base_url, contact_id=contact_id
-            ),
+            f'{self.base_url}/{contact_id}',
             json=contact,
             params={},
             headers={
@@ -189,9 +185,7 @@ class TestPersonal(RESTCommandTestCase):
         result = self.command.delete(contact_id, token=s.token)
 
         self.session.delete.assert_called_once_with(
-            '{base_url}/{contact_id}'.format(
-                base_url=self.base_url, contact_id=contact_id
-            ),
+            f'{self.base_url}/{contact_id}',
             params={},
             headers={
                 'X-Auth-Token': s.token,
