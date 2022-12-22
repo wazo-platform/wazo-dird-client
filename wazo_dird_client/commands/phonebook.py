@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2016-2021 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2016-2022 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_dird_client.commands.helpers.base_command import DirdRESTCommand
@@ -27,7 +26,7 @@ class PhonebookCommand(DirdRESTCommand):
         phonebook_id=None,
         contact_body=None,
         tenant_uuid=None,
-        **kwargs
+        **kwargs,
     ):
         url = self._contact_all_url(tenant, phonebook_id)
         headers = self.build_headers(tenant_uuid, token)
@@ -73,7 +72,7 @@ class PhonebookCommand(DirdRESTCommand):
         phonebook_id=None,
         phonebook_body=None,
         tenant_uuid=None,
-        **kwargs
+        **kwargs,
     ):
         url = self._phonebook_one_url(tenant, phonebook_id)
         headers = self.build_headers(tenant_uuid, token)
@@ -101,7 +100,7 @@ class PhonebookCommand(DirdRESTCommand):
         phonebook_id=None,
         contact_uuid=None,
         tenant_uuid=None,
-        **kwargs
+        **kwargs,
     ):
         url = self._contact_one_url(tenant, phonebook_id, contact_uuid)
         headers = self.build_headers(tenant_uuid, token)
@@ -119,7 +118,7 @@ class PhonebookCommand(DirdRESTCommand):
         contact_uuid=None,
         contact_body=None,
         tenant_uuid=None,
-        **kwargs
+        **kwargs,
     ):
         url = self._contact_one_url(tenant, phonebook_id, contact_uuid)
         headers = self.build_headers(tenant_uuid, token)
@@ -136,7 +135,7 @@ class PhonebookCommand(DirdRESTCommand):
         phonebook_id=None,
         contact_uuid=None,
         tenant_uuid=None,
-        **kwargs
+        **kwargs,
     ):
         url = self._contact_one_url(tenant, phonebook_id, contact_uuid)
         headers = self.build_headers(tenant_uuid, token)
@@ -152,13 +151,11 @@ class PhonebookCommand(DirdRESTCommand):
         encoding=None,
         token=None,
         tenant_uuid=None,
-        **kwargs
+        **kwargs,
     ):
         url = self._contact_import_url(tenant, phonebook_id)
         headers = self.build_headers(tenant_uuid, token)
-        content_type = (
-            'text/csv; charset={}'.format(encoding) if encoding else 'text/csv'
-        )
+        content_type = f'text/csv; charset={encoding}' if encoding else 'text/csv'
         headers['Content-Type'] = content_type
         r = self.session.post(url, data=csv_text, params=kwargs, headers=headers)
         if r.status_code != 200:
@@ -167,18 +164,16 @@ class PhonebookCommand(DirdRESTCommand):
         return r.json()
 
     def _contact_all_url(self, tenant, phonebook_id):
-        return '{}/{}'.format(self._phonebook_one_url(tenant, phonebook_id), 'contacts')
+        return f'{self._phonebook_one_url(tenant, phonebook_id)}/{"contacts"}'
 
     def _contact_one_url(self, tenant, phonebook_id, contact_uuid):
-        return '{}/{}'.format(self._contact_all_url(tenant, phonebook_id), contact_uuid)
+        return f'{self._contact_all_url(tenant, phonebook_id)}/{contact_uuid}'
 
     def _contact_import_url(self, tenant, phonebook_id):
-        return '{}/import'.format(self._contact_all_url(tenant, phonebook_id))
+        return f'{self._contact_all_url(tenant, phonebook_id)}/import'
 
     def _phonebook_all_url(self, tenant):
-        return '{base_url}/{tenant}/phonebooks'.format(
-            base_url=self.base_url, tenant=tenant
-        )
+        return f'{self.base_url}/{tenant}/phonebooks'
 
     def _phonebook_one_url(self, tenant, phonebook_id):
-        return '{}/{}'.format(self._phonebook_all_url(tenant), phonebook_id)
+        return f'{self._phonebook_all_url(tenant)}/{phonebook_id}'
