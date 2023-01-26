@@ -1,4 +1,4 @@
-# Copyright 2016-2022 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2016-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_lib_rest_client.tests.command import RESTCommandTestCase
@@ -88,7 +88,10 @@ class TestPhonebookContact(RESTCommandTestCase):
             contact_uuid=s.contact_uuid,
         )
 
-        url = f'{self.base_url}/{self.tenant}/phonebooks/{self.phonebook_id}/contacts/{s.contact_uuid}'
+        url = (
+            f'{self.base_url}/{self.tenant}/phonebooks/'
+            f'{self.phonebook_id}/contacts/{s.contact_uuid}'
+        )
         self.session.get.assert_called_once_with(
             url,
             params={},
@@ -122,7 +125,10 @@ class TestPhonebookContact(RESTCommandTestCase):
             token=s.token,
         )
 
-        url = f'{self.base_url}/{self.tenant}/phonebooks/{self.phonebook_id}/contacts/{s.contact_uuid}'
+        url = (
+            f'{self.base_url}/{self.tenant}/phonebooks/'
+            f'{self.phonebook_id}/contacts/{s.contact_uuid}'
+        )
 
         self.session.put.assert_called_once_with(
             url,
@@ -150,7 +156,10 @@ class TestPhonebookContact(RESTCommandTestCase):
             token=s.token,
         )
 
-        url = f'{self.base_url}/{self.tenant}/phonebooks/{self.phonebook_id}/contacts/{s.contact_uuid}'
+        url = (
+            f'{self.base_url}/{self.tenant}/phonebooks/'
+            f'{self.phonebook_id}/contacts/{s.contact_uuid}'
+        )
         self.session.delete.assert_called_once_with(
             url,
             params={},
