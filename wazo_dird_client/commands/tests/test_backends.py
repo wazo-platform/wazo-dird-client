@@ -1,4 +1,4 @@
-# Copyright 2019-2022 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2019-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
@@ -9,7 +9,6 @@ from ..backends import BackendsCommand
 
 
 class TestBackends(RESTCommandTestCase):
-
     Command = BackendsCommand
 
     def test_list_contacts_from_source(self):

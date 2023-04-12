@@ -1,11 +1,10 @@
-# Copyright 2014-2022 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2014-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from wazo_dird_client.commands.helpers.base_command import DirdRESTCommand
 
 
 class PersonalCommand(DirdRESTCommand):
-
     resource = 'personal'
 
     def list(self, token=None, tenant_uuid=None, **kwargs):

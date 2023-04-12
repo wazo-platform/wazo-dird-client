@@ -1,4 +1,4 @@
-# Copyright 2014-2022 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2014-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
@@ -9,7 +9,6 @@ logger = logging.getLogger(__name__)
 
 
 class DirectoriesCommand(DirdRESTCommand):
-
     resource = 'directories'
 
     def lookup(self, profile, token=None, tenant_uuid=None, **kwargs):
