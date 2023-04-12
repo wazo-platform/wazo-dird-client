@@ -10,7 +10,6 @@ from ..phonebook import PhonebookCommand
 
 
 class TestPhonebookContact(RESTCommandTestCase):
-
     Command = PhonebookCommand
 
     def setUp(self):
@@ -182,7 +181,6 @@ class TestPhonebookContact(RESTCommandTestCase):
 
 
 class TestPhonebook(RESTCommandTestCase):
-
     Command = PhonebookCommand
 
     def test_create(self):
