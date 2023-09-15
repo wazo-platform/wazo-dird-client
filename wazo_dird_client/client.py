@@ -19,6 +19,7 @@ class DirdClient(BaseClient):
     ldap_source: wazo_dird_client.commands.ldap_source.Command
     personal: wazo_dird_client.commands.personal.PersonalCommand
     phonebook: wazo_dird_client.commands.phonebook.PhonebookCommand
+    phonebook_deprecated: wazo_dird_client.commands.phonebook_deprecated.DeprecatedPhonebookCommand
     wazo_source: wazo_dird_client.commands.wazo_source.Command
     personal_source: wazo_dird_client.commands.personal_source.Command
     phonebook_source: wazo_dird_client.commands.phonebook_source.Command
