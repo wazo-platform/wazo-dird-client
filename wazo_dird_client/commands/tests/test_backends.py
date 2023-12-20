@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from hamcrest import assert_that, equal_to
-
 from wazo_lib_rest_client.tests.command import RESTCommandTestCase
 
 from ..backends import BackendsCommand

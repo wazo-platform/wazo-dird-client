@@ -1,11 +1,11 @@
 # Copyright 2016-2023 The Wazo Authors  (see the AUTHORS file)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+from unittest.mock import sentinel as s
 from uuid import uuid4
-from wazo_lib_rest_client.tests.command import RESTCommandTestCase
 
 from hamcrest import assert_that, equal_to, none
-from unittest.mock import sentinel as s
+from wazo_lib_rest_client.tests.command import RESTCommandTestCase
 
 from ..phonebook import PhonebookCommand
 
