@@ -135,6 +135,7 @@ from wazo_dird_client import Client as DirdClient
 
 dird_client = DirdClient('127.0.0.1', port=9489, token='valid-master-token')
 config = dird_client.config.get(tenant_uuid='valid-master-tenant-uuid')
+config_patch = dird_client.config.patch({'op':'replace', 'path': '/debug', 'value' : 'True'})
 
 ```
 
