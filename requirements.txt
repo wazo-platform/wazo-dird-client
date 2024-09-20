@@ -1,4 +1,6 @@
+https://github.com/wazo-platform/xivo-lib-python/archive/master.zip
 https://github.com/wazo-platform/wazo-lib-rest-client/archive/master.zip
 requests==2.25.1
 stevedore==4.0.2
+# from xivo-lib-python
 typing_extensions==4.4.0
